@@ -41,6 +41,8 @@ dependencies = [
     "pymilvus>=2.3.0",
     "langchain-milvus>=0.2.1",
     "psycopg[binary]>=3.2.9",
+    "pytest>=8.3.5",
+    "pytest-cov>=6.0.0",
 ]
 
 [project.optional-dependencies]

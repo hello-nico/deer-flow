@@ -23,19 +23,19 @@ class Document:
     id: str
     url: str | None = None
     title: str | None = None
-    chunks: list[Chunk] = []
+    chunks: list[Chunk]
 
     def __init__(
         self,
         id: str,
         url: str | None = None,
         title: str | None = None,
-        chunks: list[Chunk] = [],
+        chunks: list[Chunk] | None = None,
     ):
         self.id = id
         self.url = url
         self.title = title
-        self.chunks = chunks
+        self.chunks = chunks or []
 
     def to_dict(self) -> dict:
         d = {
