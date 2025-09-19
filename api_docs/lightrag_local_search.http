@@ -1,0 +1,388 @@
+### LightRAG Retrieval Integration API Test Document
+
+@Host = http://localhost:8080
+@LightRAG_Host = http://localhost:9621
+@token =
+
+### === DeerFlow Backend API Tests ===
+
+### 1. Get RAG Configuration
+GET {{Host}}/api/rag/config
+Content-Type: application/json
+
+### Expected Response
+{
+    "provider": "lightrag"
+}
+
+### 2. List Available Resources - Get LightRAG Resource List
+GET {{Host}}/api/rag/resources
+Content-Type: application/json
+
+### Resource Search with Query Parameter
+GET {{Host}}/api/rag/resources?query=tech_docs
+Content-Type: application/json
+
+### Expected Response
+{
+    "resources": [
+        {
+            "uri": "rag://space1",
+            "title": "Default Knowledge Base",
+            "description": "LightRAG default instance"
+        }
+    ]
+}
+
+### 3. Chat Interface Test - Retrieval with LightRAG Resources
+POST {{Host}}/api/chat/stream
+Content-Type: application/json
+
+{
+    "messages": [
+        {
+            "role": "user",
+            "content": "What is GraphRAG technology?"
+        }
+    ],
+    "resources": [
+        {
+            "uri": "rag://space1",
+            "title": "Space 1",
+            "description": ""
+        }
+    ],
+    "thread_id": "test-lightrag-001",
+    "auto_accepted_plan": true
+}
+
+### 5. Chat Interface Test - Chinese Retrieval Test
+POST {{Host}}/api/chat/stream
+Content-Type: application/json
+
+{
+    "messages": [
+        {
+            "role": "user",
+            "content": "What are the advantages of microservices architecture?"
+        }
+    ],
+    "resources": [
+        {
+            "uri": "lightrag://architecture",
+            "title": "Architecture Design Docs",
+            "description": "Software architecture design documents"
+        }
+    ],
+    "thread_id": "test-chinese-001"
+}
+
+### 6. Get Server Configuration Information
+GET {{Host}}/api/config
+Content-Type: application/json
+
+### Expected Response
+{
+    "rag": {
+        "provider": "lightrag"
+    },
+    "models": [...]
+}
+
+### === LightRAG Direct API Tests ===
+
+### 7. LightRAG Health Check
+GET {{LightRAG_Host}}/api/v1/health
+Content-Type: application/json
+
+### 8. LightRAG Resource List
+GET {{LightRAG_Host}}/api/v1/resources
+Content-Type: application/json
+
+### 9. LightRAG Single Retrieval - Basic Retrieval
+POST {{LightRAG_Host}}/api/v1/retrieve
+Content-Type: application/json
+
+{
+    "query": "What is RAG",
+    "max_results": 10,
+    "min_score": 0.3,
+    "resources": ["lightrag://space1"]
+}
+
+### 10. LightRAG Single Retrieval - Specified Resources
+POST {{LightRAG_Host}}/api/v1/retrieve
+Content-Type: application/json
+
+{
+    "query": "What is RAG",
+    "max_results": 10,
+    "min_score": 0.3,
+    "resources": ["lightrag://default"]
+}
+
+### 11. LightRAG Single Retrieval - Include Metadata
+POST {{LightRAG_Host}}/api/v1/retrieve
+Content-Type: application/json
+
+{
+    "query": "What is RAG",
+    "max_results": 5,
+    "min_score": 0.5,
+    "include_metadata": true
+}
+
+### Expected Response
+{
+    "success": true,
+    "result": {
+        "query": "What is RAG",
+        "chunks": [
+            {
+                "id": "chunk_1",
+                "doc_id": "document1.pdf",
+                "content": "Retrieval Augmented Generation (RAG) is an artificial intelligence technology that combines retrieval and generation...",
+                "chunk_index": 0,
+                "score": 0.85,
+                "similarity": 0.85
+            }
+        ],
+        "entities": [
+            {
+                "id": "entity_1",
+                "entity": "RAG",
+                "type": "technology",
+                "description": "Retrieval Augmented Generation technology"
+            }
+        ],
+        "relationships": [
+            {
+                "id": "rel_1",
+                "source_entity_id": "entity_1",
+                "target_entity_id": "entity_2",
+                "description": "RAG includes retrieval and generation components"
+            }
+        ],
+        "context": {
+            "chunks": [...],
+            "entities": [...],
+            "relationships": [...]
+        },
+        "metadata": {
+            "instance": "default",
+            "mode": "mix",
+            "top_k": 20,
+            "chunk_top_k": 10,
+            "retrieved_chunks": 1,
+            "structured_data": true
+        },
+        "total_results": 1,
+        "retrieval_time": 0.250
+    },
+    "error": null,
+    "execution_time": 0.250
+}
+
+### 12. LightRAG Batch Retrieval
+POST {{LightRAG_Host}}/api/v1/batch
+Content-Type: application/json
+
+{
+    "queries": ["What is RAG", "Definition of machine learning"],
+    "max_results_per_query": 5,
+    "min_score": 0.3
+}
+
+### === Error Handling and Boundary Condition Tests ===
+
+### 13. Invalid Resource URI Test
+POST {{Host}}/api/chat/stream
+Content-Type: application/json
+
+{
+    "messages": [
+        {
+            "role": "user",
+            "content": "Test invalid resource"
+        }
+    ],
+    "resources": [
+        {
+            "uri": "lightrag://nonexistent_resource",
+            "title": "Non-existent Resource",
+            "description": "Test error handling"
+        }
+    ],
+    "thread_id": "test-invalid-001"
+}
+
+### 14. Empty Query Test
+POST {{Host}}/api/chat/stream
+Content-Type: application/json
+
+{
+    "messages": [
+        {
+            "role": "user",
+            "content": ""
+        }
+    ],
+    "resources": [
+        {
+            "uri": "lightrag://default",
+            "title": "Default Knowledge Base",
+            "description": "Test empty query"
+        }
+    ],
+    "thread_id": "test-empty-001"
+}
+
+### 15. Long Query Test
+POST {{Host}}/api/chat/stream
+Content-Type: application/json
+
+{
+    "messages": [
+        {
+            "role": "user",
+            "content": "This is a very long query text to test system performance when handling long queries. We need to ensure the system can correctly handle queries of various lengths and return relevant retrieval results. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua."
+        }
+    ],
+    "resources": [
+        {
+            "uri": "lightrag://default",
+            "title": "Default Knowledge Base",
+            "description": "Test long query handling"
+        }
+    ],
+    "thread_id": "test-longquery-001"
+}
+
+### 16. Special Characters Test
+POST {{Host}}/api/chat/stream
+Content-Type: application/json
+
+{
+    "messages": [
+        {
+            "role": "user",
+            "content": "Test special characters: @#$%^&*()_+-=[]{}|;':\",./<>?"
+        }
+    ],
+    "resources": [
+        {
+            "uri": "lightrag://default",
+            "title": "Default Knowledge Base",
+            "description": "Test special character handling"
+        }
+    ],
+    "thread_id": "test-specialchars-001"
+}
+
+### === Performance Tests ===
+
+### 17. Simple Performance Test
+POST {{Host}}/api/chat/stream
+Content-Type: application/json
+
+{
+    "messages": [
+        {
+            "role": "user",
+            "content": "Performance test query"
+        }
+    ],
+    "resources": [
+        {
+            "uri": "lightrag://default",
+            "title": "Default Knowledge Base",
+            "description": "Performance test"
+        }
+    ],
+    "thread_id": "test-performance-001"
+}
+
+### 18. Complex Query Performance Test
+POST {{Host}}/api/chat/stream
+Content-Type: application/json
+
+{
+    "messages": [
+        {
+            "role": "user",
+            "content": "Please explain in detail the backpropagation algorithm in deep learning, including mathematical principles, implementation steps, and optimization techniques in practical applications, combined with specific neural network architectures."
+        }
+    ],
+    "resources": [
+        {
+            "uri": "lightrag://deep_learning",
+            "title": "Deep Learning Docs",
+            "description": "Deep learning related materials"
+        }
+    ],
+    "thread_id": "test-complex-001"
+}
+
+### === Configuration and Status Tests ===
+
+### 19. Chat Test Without Resources (Should Use Web Search)
+POST {{Host}}/api/chat/stream
+Content-Type: application/json
+
+{
+    "messages": [
+        {
+            "role": "user",
+            "content": "What's the weather like today?"
+        }
+    ],
+    "resources": [],
+    "thread_id": "test-no-rag-001"
+}
+
+### 20. Mixed Resource Test (LightRAG + Other Resources)
+POST {{Host}}/api/chat/stream
+Content-Type: application/json
+
+{
+    "messages": [
+        {
+            "role": "user",
+            "content": "Compare RAG and traditional search"
+        }
+    ],
+    "resources": [
+        {
+            "uri": "lightrag://rag_docs",
+            "title": "RAG Documents",
+            "description": "RAG related materials"
+        },
+        {
+            "uri": "rag://dataset/search_docs",
+            "title": "Search Documents",
+            "description": "Traditional search related documents"
+        }
+    ],
+    "thread_id": "test-mixed-001"
+}
+
+### === Comments and Instructions ===
+
+### Usage Instructions:
+# 1. Ensure DeerFlow service is running on localhost:8080
+# 2. Ensure LightRAG service is running on localhost:8000
+# 3. Use VS Code REST Client plugin or similar tools to run these tests
+# 4. Click "Send Request" button to execute each test
+
+### Test Coverage:
+# - Basic functionality tests (1-6)
+# - LightRAG direct API tests (7-12)
+# - Error handling tests (13-16)
+# - Performance tests (17-18)
+# - Configuration tests (19-20)
+
+### Expected Results:
+# - Successful requests should return 200 status code
+# - Resource list should return available LightRAG instances
+# - Retrieval results should contain relevant content and citations
+# - Error cases should be handled gracefully without service crashes

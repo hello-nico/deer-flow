@@ -25,6 +25,7 @@ from src.tools import (
     python_repl_tool,
 )
 from src.tools.search import LoggedTavilySearch
+from src.rag import build_retriever
 from src.utils.json_utils import repair_json_output
 
 from ..config import SELECTED_SEARCH_ENGINE, SearchEngine
@@ -48,12 +49,90 @@ def background_investigation_node(state: State, config: RunnableConfig):
     logger.info("background investigation node is running.")
     configurable = Configuration.from_runnable_config(config)
     query = state.get("research_topic")
+
+    # 优先：按开关使用 LightRAG 背景检索，产出未验证先验
+    use_lightrag_provider = os.getenv("RAG_PROVIDER", "").lower() == "lightrag"
+    use_lightrag_bg = (os.getenv("RAG_BACKGROUND_USE_LIGHTRAG", "").lower() in ("1", "true", "yes")) or use_lightrag_provider
+
+    if use_lightrag_bg and use_lightrag_provider:
+        try:
+            retriever = build_retriever()
+            resources = (state.get("resources") or configurable.resources) or []
+            # 如果上游未提供资源，尝试从 LightRAG 服务发现资源
+            if (not resources) and hasattr(retriever, "list_resources"):
+                try:
+                    discovered = retriever.list_resources()
+                    if isinstance(discovered, list) and discovered:
+                        # 取前 1 个资源以降低上下文/请求成本
+                        resources = discovered[:1]
+                        logger.info("Discovered LightRAG resources for background.", extra={"count": len(discovered)})
+                except Exception as e:
+                    logger.warning(f"Failed to discover LightRAG resources: {e}")
+            if hasattr(retriever, "query_background_knowledge") and resources:
+                result = retriever.query_background_knowledge(query, resources)
+                # 结构化压缩：控制长度与条目上限
+                bg = (result.get("background") or "").strip()
+                entities = result.get("entities") or []
+                rels = result.get("relationships") or []
+                meta = result.get("metadata") or {}
+
+                # 提取最多 10 个实体名以示例
+                def _ename(e):
+                    return e.get("entity") or e.get("name") or str(e.get("id", ""))
+                entity_names = [n for n in (_ename(e) for e in entities) if n][:10]
+
+                summary_parts = [
+                    "以下为未验证先验，仅用于规划与假设构建，后续需逐条验证。",
+                ]
+                if bg:
+                    summary_parts.append("\n【背景摘要】\n" + bg)
+                if entity_names:
+                    summary_parts.append("\n【实体示例】\n- " + "\n- ".join(entity_names))
+                stats = {
+                    "total_entities": len(entities),
+                    "total_relationships": len(rels),
+                    "total_chunks": meta.get("total_chunks"),
+                    "mode": meta.get("mode"),
+                }
+                try:
+                    summary_parts.append("\n【统计】\n" + json.dumps(stats, ensure_ascii=False))
+                except Exception:
+                    pass
+                text_out = "\n\n".join(summary_parts)
+                # 如果仅使用 background_search（或显式放宽），放开先验的 token 限制
+                relax_limits = (
+                    os.getenv("RAG_DISABLE_LOCAL_SEARCH", "false").lower() in ("1", "true", "yes")
+                    or os.getenv("BACKGROUND_PRIORS_RELAX_LIMITS", "false").lower() in ("1", "true", "yes")
+                )
+                if not relax_limits:
+                    # 严格长度限制（字符+近似token双重约束）
+                    char_limit = int(os.getenv("BACKGROUND_PRIORS_MAX_CHARS", "1200"))
+                    token_limit = int(os.getenv("BACKGROUND_PRIORS_MAX_TOKENS", "0"))
+
+                    def _approx_tokens(s: str) -> int:
+                        # 粗略估算：英语约 4 字符/Token，中文约 2 字符/Token，这里取 3 作为混合近似
+                        try:
+                            return (len(s) + 2) // 3
+                        except Exception:
+                            return len(s) // 3
+
+                    if len(text_out) > char_limit:
+                        text_out = text_out[:char_limit] + "\n...[truncated]"
+                    if token_limit and _approx_tokens(text_out) > token_limit:
+                        # 进一步按 token 预算裁剪
+                        ratio = token_limit / max(_approx_tokens(text_out), 1)
+                        new_len = int(len(text_out) * ratio)
+                        text_out = text_out[:new_len] + "\n...[truncated]"
+                return {"background_investigation_results": text_out}
+            else:
+                logger.info("LightRAG background disabled or no resources; fallback to web search.")
+        except Exception as e:
+            logger.warning(f"LightRAG background failed, fallback to web search: {e}")
+
+    # 默认：Tavily 或其他搜索引擎路径
     background_investigation_results = None
     if SELECTED_SEARCH_ENGINE == SearchEngine.TAVILY.value:
-        searched_content = LoggedTavilySearch(
-            max_results=configurable.max_search_results
-        ).invoke(query)
-        # check if the searched_content is a tuple, then we need to unpack it
+        searched_content = LoggedTavilySearch(max_results=configurable.max_search_results).invoke(query)
         if isinstance(searched_content, tuple):
             searched_content = searched_content[0]
         if isinstance(searched_content, list):
@@ -65,19 +144,13 @@ def background_investigation_node(state: State, config: RunnableConfig):
                     background_investigation_results
                 )
             }
+
         else:
-            logger.error(
-                f"Tavily search returned malformed response: {searched_content}"
-            )
+
+            logger.error(f"Tavily search returned malformed response: {searched_content}")
     else:
-        background_investigation_results = get_web_search_tool(
-            configurable.max_search_results
-        ).invoke(query)
-    return {
-        "background_investigation_results": json.dumps(
-            background_investigation_results, ensure_ascii=False
-        )
-    }
+        background_investigation_results = get_web_search_tool(configurable.max_search_results).invoke(query)
+    return {"background_investigation_results": json.dumps(background_investigation_results, ensure_ascii=False)}
 
 
 def planner_node(
@@ -347,7 +420,9 @@ async def _execute_agent_step(
 
     # Add citation reminder for researcher agent
     if agent_name == "researcher":
-        if state.get("resources"):
+        # 可选禁用本地检索，优先使用 web_search
+        disable_local = os.getenv("RAG_DISABLE_LOCAL_SEARCH", "false").lower() in ("1", "true", "yes")
+        if state.get("resources") and not disable_local:
             resources_info = "**The user mentioned the following resource files:**\n\n"
             for resource in state.get("resources"):
                 resources_info += f"- {resource.title} ({resource.description})\n"
@@ -484,9 +559,11 @@ async def researcher_node(
     logger.info("Researcher node is researching.")
     configurable = Configuration.from_runnable_config(config)
     tools = [get_web_search_tool(configurable.max_search_results), crawl_tool]
-    retriever_tool = get_retriever_tool(state.get("resources", []))
-    if retriever_tool:
-        tools.insert(0, retriever_tool)
+    disable_local = os.getenv("RAG_DISABLE_LOCAL_SEARCH", "false").lower() in ("1", "true", "yes")
+    if not disable_local:
+        retriever_tool = get_retriever_tool(state.get("resources", []))
+        if retriever_tool:
+            tools.append(retriever_tool)
     logger.info(f"Researcher tools: {tools}")
     return await _setup_and_execute_agent_step(
         state,

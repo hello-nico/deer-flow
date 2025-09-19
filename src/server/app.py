@@ -94,7 +94,6 @@ async def chat_stream(request: ChatRequest):
             status_code=403,
             detail="MCP server configuration is disabled. Set ENABLE_MCP_SERVER_CONFIGURATION=true to enable MCP features.",
         )
-
     thread_id = request.thread_id
     if thread_id == "__default__":
         thread_id = str(uuid4())
@@ -314,16 +313,21 @@ async def _astream_workflow_generator(
         workflow_input = Command(resume=resume_msg)
 
     # Prepare workflow config
+    # Note: graph nodes read runtime options via Configuration.from_runnable_config(config),
+    # which expects fields under config["configurable"].
+    # Keep thread_id and recursion_limit at top-level for LangGraph checkpointer/runtime.
     workflow_config = {
         "thread_id": thread_id,
-        "resources": resources,
-        "max_plan_iterations": max_plan_iterations,
-        "max_step_num": max_step_num,
-        "max_search_results": max_search_results,
-        "mcp_settings": mcp_settings,
-        "report_style": report_style.value,
-        "enable_deep_thinking": enable_deep_thinking,
         "recursion_limit": get_recursion_limit(),
+        "configurable": {
+            "resources": resources,
+            "max_plan_iterations": max_plan_iterations,
+            "max_step_num": max_step_num,
+            "max_search_results": max_search_results,
+            "mcp_settings": mcp_settings,
+            "report_style": report_style.value,
+            "enable_deep_thinking": enable_deep_thinking,
+        },
     }
 
     checkpoint_saver = get_bool_env("LANGGRAPH_CHECKPOINT_SAVER", False)
