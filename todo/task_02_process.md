@@ -78,3 +78,29 @@
 - 跨轮摘要与去重：对 `observations` 做聚合/摘要，降低历史堆叠；引入“新增信息率”门限停止条件。
 - 提示词增强：在 Planner/Researcher 提示中强化“先验≠证据，需逐条验证”的约束（当前已通过声明文本实现，后续可模板化）。
 - 质量度量：持续记录 `background_approx_tokens` 与最终输入规模，建立 A/B 基线。
+
+▌ 我们当前背景知识模式是可插拔的吗，我想如果快速作为对比的话。设置一个参数就可以关闭掉，同时背景知识模式是否会影响到原来deer-flow的流程。
+
+> 结论
+
+- 可插拔：是。背景知识模式已通过环境变量可控，且对原有流程是“非破坏性叠加”，关闭后自动回退到原 Tavily/web 背景路径。
+- 快速对比：可“一键”关闭/开启；建议用环境变量切换，必要时我可再微调一行逻辑，让开关更“强制化”。
+
+  如何开关（当前实现）
+
+- 开启背景先验（推荐组合）
+  - .env：
+    - RAG_PROVIDER=lightrag
+    - RAG_BACKGROUND_USE_LIGHTRAG=true
+    - RAG_DISABLE_LOCAL_SEARCH=true（你当前策略，禁用本地检索）
+    - BACKGROUND_PRIORS_RELAX_LIMITS=true（背景先验放开长度/token 限制）
+- 关闭背景先验（回到原 deer-flow 背景路径）
+  - 方案 A（无代码改动，立刻可用）：
+    - .env 设置 RAG_PROVIDER=（置空或改为非 lightrag），则 background_investigation_node 自动回退 Tavily/web 路径。
+  - 方案 B（如仍保留 RAG_PROVIDER=lightrag，但想“硬关”背景先验）：
+    - 建议我改一行逻辑，使开关完全由 RAG_BACKGROUND_USE_LIGHTRAG 决定，而不再“当 provider 为 lightrag 时默认开启”。改动点：src/graph/nodes.py 的 background_investigation_node 判断处（当
+
+- 节点与路由：未改变原有多智能体/节点的顺序与路由。仅“背景调查”节点的数据源切换为 LightRAG（开启时），失败或关闭则回退至原 Tavily/web 路径。
+- Planner/Researcher/Reporter：结构不变。背景结果以“未验证先验”形式注入 Planner，研究阶段仍按计划用 web_search/crawl_tool 做取证。你已设置 RAG_DISABLE_LOCAL_SEARCH=true，因此不再引入
+  local_search_tool（这也是你期望的对比形态）。
+- 失败回退：LightRAG 不可用/无资源时自动回退原路径，保证稳定性。

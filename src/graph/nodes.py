@@ -52,7 +52,7 @@ def background_investigation_node(state: State, config: RunnableConfig):
 
     # 优先：按开关使用 LightRAG 背景检索，产出未验证先验
     use_lightrag_provider = os.getenv("RAG_PROVIDER", "").lower() == "lightrag"
-    use_lightrag_bg = (os.getenv("RAG_BACKGROUND_USE_LIGHTRAG", "").lower() in ("1", "true", "yes")) or use_lightrag_provider
+    use_lightrag_bg = (os.getenv("RAG_BACKGROUND", "").lower() in ("1", "true", "yes"))
 
     if use_lightrag_bg and use_lightrag_provider:
         try:
@@ -128,6 +128,8 @@ def background_investigation_node(state: State, config: RunnableConfig):
                 logger.info("LightRAG background disabled or no resources; fallback to web search.")
         except Exception as e:
             logger.warning(f"LightRAG background failed, fallback to web search: {e}")
+    else:
+        logger.info("background investigation node disabled, fallback to web search.")
 
     # 默认：Tavily 或其他搜索引擎路径
     background_investigation_results = None
