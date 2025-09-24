@@ -48,7 +48,23 @@ def handoff_to_planner(
 def background_investigation_node(state: State, config: RunnableConfig):
     logger.info("background investigation node is running.")
     configurable = Configuration.from_runnable_config(config)
-    query = state.get("research_topic")
+
+    enhanced_query = (state.get("enhanced_query_en") or "").strip()
+    original_query = state.get("research_topic", "")
+
+    if enhanced_query:
+        query = enhanced_query
+    else:
+        query = original_query
+        if original_query:
+            from src.utils.translation import translate_to_en
+
+            translated_query = translate_to_en(original_query)
+            if translated_query and translated_query != original_query:
+                logger.info(
+                    "Translated query to English: %s", translated_query
+                )
+                query = translated_query
 
     # 优先：按开关使用 LightRAG 背景检索，产出未验证先验
     use_lightrag_provider = os.getenv("RAG_PROVIDER", "").lower() == "lightrag"

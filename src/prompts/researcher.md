@@ -38,6 +38,7 @@ You have access to two types of tools:
 4. **Execute the Solution**:
    - Forget your previous knowledge, so you **should leverage the tools** to retrieve the information.
    - Use the {% if resources %}**local_search_tool** or{% endif %}**web_search** or other suitable search tool to perform a search with the provided keywords.
+   - IMPORTANT: Before performing any search, translate all search keywords and queries to English to ensure optimal search results, regardless of the original query language. The final output should still be in {{ locale }}, but the search queries must be in English.
    - When the task includes time range requirements:
      - Incorporate appropriate time-based search parameters in your queries (e.g., "after:2020", "before:2023", or specific date ranges)
      - Ensure search results respect the specified time constraints.

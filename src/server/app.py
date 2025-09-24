@@ -304,7 +304,27 @@ async def _astream_workflow_generator(
         "auto_accepted_plan": auto_accepted_plan,
         "enable_background_investigation": enable_background_investigation,
         "research_topic": messages[-1]["content"] if messages else "",
+        "enhanced_query_en": "",  # Will be populated by prompt enhancer
     }
+
+    # Try to enhance the query using prompt enhancer
+    try:
+        user_message = messages[-1]["content"] if messages else ""
+        if user_message:
+            prompt_enhancer_workflow = build_prompt_enhancer_graph()
+            enhancer_state = {
+                "prompt": user_message,
+                "context": "",
+                "report_style": report_style,
+            }
+            enhancer_result = prompt_enhancer_workflow.invoke(enhancer_state)
+            enhanced_query_en = enhancer_result.get("output", "").strip()
+            if enhanced_query_en:
+                workflow_input["enhanced_query_en"] = enhanced_query_en
+                logger.info(f"Enhanced query (English): {enhanced_query_en}")
+    except Exception as e:
+        logger.warning(f"Failed to enhance prompt: {e}")
+        workflow_input["enhanced_query_en"] = ""
 
     if not auto_accepted_plan and interrupt_feedback:
         resume_msg = f"[{interrupt_feedback}]"

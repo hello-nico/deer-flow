@@ -22,11 +22,67 @@ from src.tools.decorators import create_logged_tool
 from src.tools.tavily_search.tavily_search_results_with_images import (
     TavilySearchWithImages,
 )
+from src.utils.translation import translate_to_en
 
 logger = logging.getLogger(__name__)
 
+
+class PreprocessedTavilySearch(TavilySearchWithImages):
+    """Tavily search tool with automatic query preprocessing for English queries."""
+
+    @staticmethod
+    def _ensure_english(query: str) -> str:
+        """Translate incoming queries to English when necessary."""
+        processed_query = translate_to_en(query)
+        if processed_query != query:
+            logger.info(
+                "Preprocessed search query: '%s' -> '%s'", query, processed_query
+            )
+        return processed_query
+
+    def _run(self, query: str, run_manager=None, **kwargs):
+        # Preprocess the query to ensure it's in English
+        processed_query = self._ensure_english(query)
+        return super()._run(processed_query, run_manager=run_manager, **kwargs)
+
+    async def _arun(self, query: str, run_manager=None, **kwargs):
+        # Ensure async path also gets English queries
+        processed_query = self._ensure_english(query)
+        return await super()._arun(processed_query, run_manager=run_manager, **kwargs)
+
+
+def preprocess_search_query(query: str, enhanced_query_en: str = "") -> str:
+    """
+    Preprocess search query to ensure it's in English for optimal search results.
+
+    Args:
+        query: Original search query
+        enhanced_query_en: Enhanced English query from prompt enhancer (if available)
+
+    Returns:
+        English query for searching
+    """
+    #优先使用增强后的英文查询
+    if enhanced_query_en and enhanced_query_en.strip():
+        logger.debug(f"Using enhanced English query: {enhanced_query_en}")
+        return enhanced_query_en
+
+    #如果没有增强查询，尝试翻译原始查询
+    if query and query.strip():
+        translated_query = translate_to_en(query)
+        if translated_query != query:
+            logger.info(f"Translated search query to English: '{query}' -> '{translated_query}'")
+            return translated_query
+        else:
+            logger.debug("Query is already in English or translation failed")
+            return query
+
+    # Fallback to empty string
+    return ""
+
+
 # Create logged versions of the search tools
-LoggedTavilySearch = create_logged_tool(TavilySearchWithImages)
+LoggedTavilySearch = create_logged_tool(PreprocessedTavilySearch)
 LoggedDuckDuckGoSearch = create_logged_tool(DuckDuckGoSearchResults)
 LoggedBraveSearch = create_logged_tool(BraveSearch)
 LoggedArxivSearch = create_logged_tool(ArxivQueryRun)
@@ -39,7 +95,6 @@ def get_search_config():
     return search_config
 
 
-# Get the selected search tool
 def get_web_search_tool(max_search_results: int):
     search_config = get_search_config()
 

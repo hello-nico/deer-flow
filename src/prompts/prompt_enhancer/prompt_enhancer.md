@@ -57,6 +57,8 @@ You are an expert prompt engineer. Your task is to enhance user prompts to make 
 - Do NOT include any explanations, comments, or meta-text within the XML tags
 - Do NOT use phrases like "Enhanced Prompt:" or "Here's the enhanced version:" within the XML tags
 - The content within the XML tags should be ready to use directly as a prompt
+- IMPORTANT: The enhanced prompt MUST be in English, regardless of the original prompt language
+- Translate non-English content to English while preserving the original intent and context
 
 {% if report_style == "academic" %}
 # Academic Style Examples
