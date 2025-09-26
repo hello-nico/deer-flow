@@ -1,0 +1,327 @@
+INFO:     127.0.0.1:33584 - "POST /api/chat/stream HTTP/1.1" 200 OK
+2025-09-19 16:51:52,046 - src.config.configuration - INFO - Recursion limit set to: 30
+2025-09-19 16:51:52,049 - src.graph.nodes - INFO - Coordinator talking.
+2025-09-19 16:51:53,579 - httpx - INFO - HTTP Request: POST https://openrouter.ai/api/v1/chat/completions "HTTP/1.1 200 OK"
+2025-09-19 16:52:10,971 - src.graph.nodes - INFO - background investigation node is running.
+2025-09-19 16:52:11,954 - src.graph.nodes - INFO - Planner generating full plan
+2025-09-19 16:52:12,915 - httpx - INFO - HTTP Request: POST https://openrouter.ai/api/v1/chat/completions "HTTP/1.1 200 OK"
+2025-09-19 16:53:55,710 - src.graph.nodes - INFO - Planner response: {
+    "locale": "en-US",
+    "has_enough_context": false,
+    "thought": "The user wants a clear, accurate explanation of GraphRAG technology; to produce a comprehensive report, we must gather authoritative definitions, architectures, ecosystem implementations, benchmarks, use cases, risks, and future directions.",
+    "title": "Comprehensive Research Plan: GraphRAG Technology (Definition, Architecture, Ecosystem, Evidence)",
+    "steps": [
+        {
+            "need_search": true,
+            "title": "Foundations, Definitions, History, and Architectural Taxonomy of GraphRAG",
+            "description": "Collect authoritative, up-to-date sources that define GraphRAG and describe how it differs from baseline/vector-only RAG. Specifically gather: (1) Formal definitions and origin: Microsoft Research materials (blog/tech report), the official GraphRAG site and GitHub repo (e.g., microsoft/graphrag), arXiv or tech reports; capture publication dates and version history. (2) Architectural details and pipelines: end-to-end pipeline to extract knowledge graphs from text (entity/relation extraction methods, tools used), graph construction and enrichment, community detection (e.g., Louvain/Leiden), graph ML outputs (e.g., centrality, embeddings), global vs local reasoning modes, and how these artifacts are used at query time to augment prompts. (3) Taxonomy of approaches: KG-first (using existing enterprise knowledge graphs), extract-on-the-fly from unstructured corpora, and hybrid methods; summarize the retrieval and prompting patterns for each. (4) Conceptual comparisons: Baseline RAG vs GraphRAG; how GraphRAG supports multi-hop/cross-document reasoning, explainability, provenance; related concepts/alternatives such as KG-RAG, HippoRAG, RAPTOR, Graph-of-Thoughts—clarify distinctions. (5) Target tasks GraphRAG aims to improve (e.g., complex QA, multi-hop reasoning) and any stated design goals or constraints. For each source, capture: title, author/org, date, URL (retain in full Markdown), key quotes, architectural diagrams or descriptions, and any explicit claims or definitions.",
+            "step_type": "research"
+        },
+        {
+            "need_search": true,
+            "title": "Ecosystem, Implementations, Tools, and Integration Patterns",
+            "description": "Map the current GraphRAG ecosystem and practical build stacks. Collect: (1) Open-source implementations and libraries: official Microsoft GraphRAG repo, notable derivatives (e.g., LightRAG), and framework support in LlamaIndex and LangChain (graph indices/retrievers), with links, capabilities, and maturity. (2) Graph databases and storage backends used for GraphRAG: Neo4j, FalkorDB, TigerGraph, ArangoDB, NebulaGraph, AWS Neptune, etc.; capture connectors, drivers, and example Cypher/Gremlin/GQL query patterns for retrieval; note hybrid patterns combining vector stores (FAISS, Milvus, pgvector) with graph stores. (3) Information extraction for graph construction: tools/pipelines for entity/relation extraction (LLM-based IE, spaCy, Stanza), schema design practices (entity/relation types, ontologies), data lineage/provenance capture, and update/refresh strategies. (4) Integration patterns and ops: ingestion/ETL workflows, indexing vs query-time augmentation, prompt templates for global/local context, governance (schema/versioning), access control/PII handling, deployment considerations (latency, throughput). (5) Representative code examples/snippets or notebooks illustrating end-to-end GraphRAG queries. For each item, capture: repository/docs URL (full Markdown), maintainer/vendor, last update date, license, feature summary, and example usage.",
+            "step_type": "research"
+        },
+        {
+            "need_search": true,
+            "title": "Empirical Evidence, Benchmarks, Use Cases, Limitations/Risks, and Future Directions",
+            "description": "Gather quantitative and qualitative evidence on GraphRAG performance and practicality. Collect: (1) Benchmarks and evaluations comparing GraphRAG to baseline RAG: datasets (e.g., HotpotQA, 2WikiMultihopQA, MuSiQue, etc.), metrics (EM, F1, precision/recall, hallucination rate), absolute numbers, and reported improvements; include model types (e.g., GPT-4, Llama variants), graph DB used, and experimental settings; capture tables/figures where available. (2) Independent replications or third-party studies (academic/industry) and any contradictory findings; include links and methodological notes. (3) Real-world case studies across sectors (healthcare, finance, legal, e-commerce, enterprise search): problem, dataset size, graph scale, outcomes (accuracy gains, latency/cost impacts), and business value. (4) Limitations, risks, and failure modes: graph extraction quality/noise, schema drift, cost/latency overheads, scaling limits, privacy/security concerns, evaluation difficulty; mitigation practices (human-in-the-loop validation, provenance, constrained generation). (5) Future indicators and trends (2024–2025+): standardization (e.g., GQL), neurosymbolic integration, multi-agent/query planning, native LLM tool-use for graph querying, and vendor roadmaps. For each source, record: title, author/org, date, URL (full Markdown), key findings, direct quotes for critical claims, and any numerical data points exactly as reported (no calculations here).",
+            "step_type": "research"
+        }
+    ]
+}
+2025-09-19 16:53:55,713 - src.graph.nodes - INFO - Research team is collaborating on tasks.
+2025-09-19 16:53:55,714 - src.graph.nodes - INFO - Researcher node is researching.
+2025-09-19 16:53:55,714 - src.tools.search - INFO - Tavily search configuration loaded: include_domains=[], exclude_domains=[]
+2025-09-19 16:53:55,715 - src.tools.retriever - INFO - create retriever tool: lightrag
+2025-09-19 16:53:55,715 - src.graph.nodes - INFO - Researcher tools: [LoggedTavilySearchWithImages(name='web_search', max_results=3, include_raw_content=True, include_images=True, api_wrapper=EnhancedTavilySearchAPIWrapper(tavily_api_key=SecretStr('**********'), api_base_url=None), include_image_descriptions=True), StructuredTool(name='crawl_tool', description='Use this to crawl a url and get a readable content in markdown format.', args_schema=<class 'langchain_core.utils.pydantic.crawl_tool'>, func=<function crawl_tool at 0x7460c207eca0>), RetrieverTool(retriever=<src.rag.lightrag.LightRAGProvider object at 0x7460c0a68800>, resources=[Resource(uri='rag://space1', title='Space 1', description='')])]
+2025-09-19 16:53:55,722 - src.graph.nodes - INFO - Executing step: Foundations, Definitions, History, and Architectural Taxonomy of GraphRAG, agent: researcher
+2025-09-19 16:53:55,722 - src.graph.nodes - INFO - Recursion limit set to: 30
+2025-09-19 16:53:55,723 - src.graph.nodes - INFO - Agent input: {'messages': [HumanMessage(content='# Research Topic\n\nComprehensive Research Plan: GraphRAG Technology (Definition, Architecture, Ecosystem, Evidence)\n\n# Current Step\n\n## Title\n\nFoundations, Definitions, History, and Architectural Taxonomy of GraphRAG\n\n## Description\n\nCollect authoritative, up-to-date sources that define GraphRAG and describe how it differs from baseline/vector-only RAG. Specifically gather: (1) Formal definitions and origin: Microsoft Research materials (blog/tech report), the official GraphRAG site and GitHub repo (e.g., microsoft/graphrag), arXiv or tech reports; capture publication dates and version history. (2) Architectural details and pipelines: end-to-end pipeline to extract knowledge graphs from text (entity/relation extraction methods, tools used), graph construction and enrichment, community detection (e.g., Louvain/Leiden), graph ML outputs (e.g., centrality, embeddings), global vs local reasoning modes, and how these artifacts are used at query time to augment prompts. (3) Taxonomy of approaches: KG-first (using existing enterprise knowledge graphs), extract-on-the-fly from unstructured corpora, and hybrid methods; summarize the retrieval and prompting patterns for each. (4) Conceptual comparisons: Baseline RAG vs GraphRAG; how GraphRAG supports multi-hop/cross-document reasoning, explainability, provenance; related concepts/alternatives such as KG-RAG, HippoRAG, RAPTOR, Graph-of-Thoughts—clarify distinctions. (5) Target tasks GraphRAG aims to improve (e.g., complex QA, multi-hop reasoning) and any stated design goals or constraints. For each source, capture: title, author/org, date, URL (retain in full Markdown), key quotes, architectural diagrams or descriptions, and any explicit claims or definitions.\n\n## Locale\n\nen-US', additional_kwargs={}, response_metadata={}), HumanMessage(content='**The user mentioned the following resource files:**\n\n- Space 1 ()\n\n\nYou MUST use the **local_search_tool** to retrieve the information from the resource files.', additional_kwargs={}, response_metadata={}), HumanMessage(content='IMPORTANT: DO NOT include inline citations in the text. Instead, track all sources and include a References section at the end using link reference format. Include an empty line between each citation for better readability. Use this format for each reference:\n- [Source Title](URL)\n\n- [Another Source](URL)', additional_kwargs={}, response_metadata={}, name='system')]}
+2025-09-19 16:53:57,178 - httpx - INFO - HTTP Request: POST https://openrouter.ai/api/v1/chat/completions "HTTP/1.1 200 OK"
+2025-09-19 16:54:16,360 - src.tools.retriever - INFO - Retriever tool query: GraphRAG Space 1 Microsoft definition pipeline global local community detection Louvain Leiden arXiv tech report GitHub
+2025-09-19 16:54:22,534 - src.rag.lightrag - INFO - LightRAG response received.
+2025-09-19 16:54:22,534 - src.rag.lightrag - INFO - LightRAG chunks parsed.
+2025-09-19 16:54:25,733 - httpx - INFO - HTTP Request: POST https://openrouter.ai/api/v1/chat/completions "HTTP/1.1 200 OK"
+2025-09-19 16:54:29,568 - src.tools.retriever - INFO - Retriever tool query: GraphRAG Microsoft Research definition site GitHub arXiv pipeline global local community detection Louvain Leiden Space 1
+2025-09-19 16:54:38,048 - src.rag.lightrag - INFO - LightRAG response received.
+2025-09-19 16:54:38,048 - src.rag.lightrag - INFO - LightRAG chunks parsed.
+2025-09-19 16:54:39,297 - httpx - INFO - HTTP Request: POST https://openrouter.ai/api/v1/chat/completions "HTTP/1.1 200 OK"
+2025-09-19 16:54:49,563 - src.tools.retriever - INFO - Retriever tool query: GraphRAG
+2025-09-19 16:54:59,195 - src.rag.lightrag - INFO - LightRAG response received.
+2025-09-19 16:54:59,195 - src.rag.lightrag - INFO - LightRAG chunks parsed.
+2025-09-19 16:55:00,685 - httpx - INFO - HTTP Request: POST https://openrouter.ai/api/v1/chat/completions "HTTP/1.1 200 OK"
+2025-09-19 16:55:51,957 - src.graph.nodes - INFO - Step 'Foundations, Definitions, History, and Architectural Taxonomy of GraphRAG' execution completed by researcher
+2025-09-19 16:55:51,958 - src.graph.nodes - INFO - Research team is collaborating on tasks.
+2025-09-19 16:55:51,959 - src.graph.nodes - INFO - Researcher node is researching.
+2025-09-19 16:55:51,959 - src.tools.search - INFO - Tavily search configuration loaded: include_domains=[], exclude_domains=[]
+2025-09-19 16:55:51,959 - src.tools.retriever - INFO - create retriever tool: lightrag
+2025-09-19 16:55:51,959 - src.graph.nodes - INFO - Researcher tools: [LoggedTavilySearchWithImages(name='web_search', max_results=3, include_raw_content=True, include_images=True, api_wrapper=EnhancedTavilySearchAPIWrapper(tavily_api_key=SecretStr('**********'), api_base_url=None), include_image_descriptions=True), StructuredTool(name='crawl_tool', description='Use this to crawl a url and get a readable content in markdown format.', args_schema=<class 'langchain_core.utils.pydantic.crawl_tool'>, func=<function crawl_tool at 0x7460c207eca0>), RetrieverTool(retriever=<src.rag.lightrag.LightRAGProvider object at 0x7460c0af7800>, resources=[Resource(uri='rag://space1', title='Space 1', description='')])]
+2025-09-19 16:55:51,964 - src.graph.nodes - INFO - Executing step: Ecosystem, Implementations, Tools, and Integration Patterns, agent: researcher
+2025-09-19 16:55:51,964 - src.graph.nodes - INFO - Recursion limit set to: 30
+2025-09-19 16:55:51,964 - src.graph.nodes - INFO - Agent input: {'messages': [HumanMessage(content='# Research Topic\n\nComprehensive Research Plan: GraphRAG Technology (Definition, Architecture, Ecosystem, Evidence)\n\n# Completed Research Steps\n\n## Completed Step 1: Foundations, Definitions, History, and Architectural Taxonomy of GraphRAG\n\n<finding>\nProblem Statement\nYou asked me to collect authoritative, up-to-date sources on GraphRAG covering definitions, origins, architecture, taxonomy of approaches, comparisons to baseline RAG, and target tasks—explicitly using your provided resource files (“Space 1”) via the local_search_tool. You also require references in link format without inline citations.\n\nResearch Findings\nStatus: Blocked by local_search_tool error\n- I attempted to use the local_search_tool to retrieve materials from your resource files (“Space 1”), but the tool returned an internal error: NameError("name \'max_total_tokens\' is not defined"). This occurred repeatedly across multiple keyword attempts, including:\n  - GraphRAG Space 1 Microsoft definition pipeline global local community detection Louvain Leiden arXiv tech report GitHub\n  - GraphRAG Microsoft Research definition site GitHub arXiv pipeline global local community detection Louvain Leiden Space 1\n  - GraphRAG\n\n- Because the tool failed, I currently cannot access your local resource files nor extract any content from them. Per your instruction, I must use the local_search_tool to retrieve these resources; therefore, I will not proceed with external web sources unless you explicitly authorize that fallback.\n\nWhat I will extract once the tool is functional\nWhen the local_search_tool is available, I will:\n1) Formal definitions and origin\n- Collect Microsoft Research materials (blogs, tech reports), the official GraphRAG site and GitHub repository (e.g., microsoft/graphrag), and any arXiv/tech reports.\n- Capture publication dates, version tags/releases, and any version history notes.\n- Extract key quotes that define GraphRAG and its stated purpose, including how it differs from vector-only RAG.\n\n2) Architectural details and pipelines\n- Extract descriptions and diagrams of end-to-end pipelines:\n  - Entity/relation extraction methods and tools (e.g., NER, relation extraction, LLM-based extraction).\n  - Graph construction and enrichment steps (schema, attributes, knowledge consolidation).\n  - Community detection algorithms (e.g., Louvain, Leiden), graph ML metrics (centrality, embeddings), and outputs.\n  - Global vs local reasoning modes and how graph artifacts are used at query time to augment prompts (global summaries, neighborhood retrieval, multi-hop traversals).\n- Capture any architectural diagrams or figures and include them if available in the resources.\n\n3) Taxonomy of approaches\n- KG-first patterns: leveraging existing enterprise KGs and how retrieval/prompting is orchestrated.\n- Extract-on-the-fly patterns: building a KG from unstructured corpora; retrieval and prompting strategies.\n- Hybrid approaches: how pre-existing KGs are combined with extracted structures; orchestration specifics.\n\n4) Conceptual comparisons\n- Baseline/vector-only RAG vs GraphRAG: differences in retrieval targets, reasoning capability (multi-hop, cross-document), explainability, provenance, and controllability.\n- Related/alternative methods: KG-RAG, HippoRAG, RAPTOR, Graph-of-Thoughts (distinguishing objectives, mechanisms, and trade-offs).\n- Capture explicit claims and design rationales from authoritative sources.\n\n5) Target tasks, goals, and constraints\n- Identify tasks GraphRAG aims to improve (e.g., complex QA, planning, multi-hop reasoning, cross-document synthesis).\n- Extract any stated design goals, constraints, performance considerations, or evaluation setups.\n\nRequested actions to unblock\n- Please fix the local_search_tool error or provide access to the resource files via specific rag:// URIs or shareable links.\n- If acceptable, authorize me to temporarily use web_search and crawl_tool to gather the required sources while the local tool is being repaired.\n- If there are specific documents within “Space 1” you want prioritized, please provide their filenames or rag:// paths.\n\nConclusion\nI’m currently blocked from accessing your local resource files due to an internal error in the local_search_tool. Once the tool is fixed (or if you authorize a web-based fallback), I will proceed to compile the requested, fully cited research package with definitions, origins, architectural pipelines, taxonomy, comparisons, target tasks, key quotes, and diagrams, formatted per your requirements.\n\nReferences\nNo references can be listed yet because I’m unable to access the specified resource files. Please enable local_search_tool access or permit web-based retrieval so I can collect and cite the sources.\n</finding>\n\n# Current Step\n\n## Title\n\nEcosystem, Implementations, Tools, and Integration Patterns\n\n## Description\n\nMap the current GraphRAG ecosystem and practical build stacks. Collect: (1) Open-source implementations and libraries: official Microsoft GraphRAG repo, notable derivatives (e.g., LightRAG), and framework support in LlamaIndex and LangChain (graph indices/retrievers), with links, capabilities, and maturity. (2) Graph databases and storage backends used for GraphRAG: Neo4j, FalkorDB, TigerGraph, ArangoDB, NebulaGraph, AWS Neptune, etc.; capture connectors, drivers, and example Cypher/Gremlin/GQL query patterns for retrieval; note hybrid patterns combining vector stores (FAISS, Milvus, pgvector) with graph stores. (3) Information extraction for graph construction: tools/pipelines for entity/relation extraction (LLM-based IE, spaCy, Stanza), schema design practices (entity/relation types, ontologies), data lineage/provenance capture, and update/refresh strategies. (4) Integration patterns and ops: ingestion/ETL workflows, indexing vs query-time augmentation, prompt templates for global/local context, governance (schema/versioning), access control/PII handling, deployment considerations (latency, throughput). (5) Representative code examples/snippets or notebooks illustrating end-to-end GraphRAG queries. For each item, capture: repository/docs URL (full Markdown), maintainer/vendor, last update date, license, feature summary, and example usage.\n\n## Locale\n\nen-US', additional_kwargs={}, response_metadata={}), HumanMessage(content='**The user mentioned the following resource files:**\n\n- Space 1 ()\n\n\nYou MUST use the **local_search_tool** to retrieve the information from the resource files.', additional_kwargs={}, response_metadata={}), HumanMessage(content='IMPORTANT: DO NOT include inline citations in the text. Instead, track all sources and include a References section at the end using link reference format. Include an empty line between each citation for better readability. Use this format for each reference:\n- [Source Title](URL)\n\n- [Another Source](URL)', additional_kwargs={}, response_metadata={}, name='system')]}
+2025-09-19 16:55:53,028 - httpx - INFO - HTTP Request: POST https://openrouter.ai/api/v1/chat/completions "HTTP/1.1 200 OK"
+2025-09-19 16:56:06,512 - src.tools.retriever - INFO - Retriever tool query: GraphRAG ecosystem implementations Microsoft GraphRAG LightRAG LlamaIndex LangChain graph retriever index vector graph hybrid Space 1
+2025-09-19 16:56:15,142 - src.rag.lightrag - INFO - LightRAG response received.
+2025-09-19 16:56:15,142 - src.rag.lightrag - INFO - LightRAG chunks parsed.
+2025-09-19 16:56:16,485 - httpx - INFO - HTTP Request: POST https://openrouter.ai/api/v1/chat/completions "HTTP/1.1 200 OK"
+2025-09-19 16:56:34,926 - src.tools.retriever - INFO - Retriever tool query: Space 1 GraphRAG implementations ecosystem LightRAG LlamaIndex LangChain Neo4j Milvus pgvector Space1
+2025-09-19 16:56:41,013 - src.rag.lightrag - INFO - LightRAG response received.
+2025-09-19 16:56:41,013 - src.rag.lightrag - INFO - LightRAG chunks parsed.
+2025-09-19 16:56:42,389 - httpx - INFO - HTTP Request: POST https://openrouter.ai/api/v1/chat/completions "HTTP/1.1 200 OK"
+2025-09-19 16:57:41,966 - src.graph.nodes - INFO - Step 'Ecosystem, Implementations, Tools, and Integration Patterns' execution completed by researcher
+2025-09-19 16:57:41,967 - src.graph.nodes - INFO - Research team is collaborating on tasks.
+2025-09-19 16:57:41,968 - src.graph.nodes - INFO - Researcher node is researching.
+2025-09-19 16:57:41,968 - src.tools.search - INFO - Tavily search configuration loaded: include_domains=[], exclude_domains=[]
+2025-09-19 16:57:41,968 - src.tools.retriever - INFO - create retriever tool: lightrag
+2025-09-19 16:57:41,968 - src.graph.nodes - INFO - Researcher tools: [LoggedTavilySearchWithImages(name='web_search', max_results=3, include_raw_content=True, include_images=True, api_wrapper=EnhancedTavilySearchAPIWrapper(tavily_api_key=SecretStr('**********'), api_base_url=None), include_image_descriptions=True), StructuredTool(name='crawl_tool', description='Use this to crawl a url and get a readable content in markdown format.', args_schema=<class 'langchain_core.utils.pydantic.crawl_tool'>, func=<function crawl_tool at 0x7460c207eca0>), RetrieverTool(retriever=<src.rag.lightrag.LightRAGProvider object at 0x7460c17c9220>, resources=[Resource(uri='rag://space1', title='Space 1', description='')])]
+2025-09-19 16:57:41,974 - src.graph.nodes - INFO - Executing step: Empirical Evidence, Benchmarks, Use Cases, Limitations/Risks, and Future Directions, agent: researcher
+2025-09-19 16:57:41,974 - src.graph.nodes - INFO - Recursion limit set to: 30
+2025-09-19 16:57:41,975 - src.graph.nodes - INFO - Agent input: {'messages': [HumanMessage(content='# Research Topic\n\nComprehensive Research Plan: GraphRAG Technology (Definition, Architecture, Ecosystem, Evidence)\n\n# Completed Research Steps\n\n## Completed Step 1: Foundations, Definitions, History, and Architectural Taxonomy of GraphRAG\n\n<finding>\nProblem Statement\nYou asked me to collect authoritative, up-to-date sources on GraphRAG covering definitions, origins, architecture, taxonomy of approaches, comparisons to baseline RAG, and target tasks—explicitly using your provided resource files (“Space 1”) via the local_search_tool. You also require references in link format without inline citations.\n\nResearch Findings\nStatus: Blocked by local_search_tool error\n- I attempted to use the local_search_tool to retrieve materials from your resource files (“Space 1”), but the tool returned an internal error: NameError("name \'max_total_tokens\' is not defined"). This occurred repeatedly across multiple keyword attempts, including:\n  - GraphRAG Space 1 Microsoft definition pipeline global local community detection Louvain Leiden arXiv tech report GitHub\n  - GraphRAG Microsoft Research definition site GitHub arXiv pipeline global local community detection Louvain Leiden Space 1\n  - GraphRAG\n\n- Because the tool failed, I currently cannot access your local resource files nor extract any content from them. Per your instruction, I must use the local_search_tool to retrieve these resources; therefore, I will not proceed with external web sources unless you explicitly authorize that fallback.\n\nWhat I will extract once the tool is functional\nWhen the local_search_tool is available, I will:\n1) Formal definitions and origin\n- Collect Microsoft Research materials (blogs, tech reports), the official GraphRAG site and GitHub repository (e.g., microsoft/graphrag), and any arXiv/tech reports.\n- Capture publication dates, version tags/releases, and any version history notes.\n- Extract key quotes that define GraphRAG and its stated purpose, including how it differs from vector-only RAG.\n\n2) Architectural details and pipelines\n- Extract descriptions and diagrams of end-to-end pipelines:\n  - Entity/relation extraction methods and tools (e.g., NER, relation extraction, LLM-based extraction).\n  - Graph construction and enrichment steps (schema, attributes, knowledge consolidation).\n  - Community detection algorithms (e.g., Louvain, Leiden), graph ML metrics (centrality, embeddings), and outputs.\n  - Global vs local reasoning modes and how graph artifacts are used at query time to augment prompts (global summaries, neighborhood retrieval, multi-hop traversals).\n- Capture any architectural diagrams or figures and include them if available in the resources.\n\n3) Taxonomy of approaches\n- KG-first patterns: leveraging existing enterprise KGs and how retrieval/prompting is orchestrated.\n- Extract-on-the-fly patterns: building a KG from unstructured corpora; retrieval and prompting strategies.\n- Hybrid approaches: how pre-existing KGs are combined with extracted structures; orchestration specifics.\n\n4) Conceptual comparisons\n- Baseline/vector-only RAG vs GraphRAG: differences in retrieval targets, reasoning capability (multi-hop, cross-document), explainability, provenance, and controllability.\n- Related/alternative methods: KG-RAG, HippoRAG, RAPTOR, Graph-of-Thoughts (distinguishing objectives, mechanisms, and trade-offs).\n- Capture explicit claims and design rationales from authoritative sources.\n\n5) Target tasks, goals, and constraints\n- Identify tasks GraphRAG aims to improve (e.g., complex QA, planning, multi-hop reasoning, cross-document synthesis).\n- Extract any stated design goals, constraints, performance considerations, or evaluation setups.\n\nRequested actions to unblock\n- Please fix the local_search_tool error or provide access to the resource files via specific rag:// URIs or shareable links.\n- If acceptable, authorize me to temporarily use web_search and crawl_tool to gather the required sources while the local tool is being repaired.\n- If there are specific documents within “Space 1” you want prioritized, please provide their filenames or rag:// paths.\n\nConclusion\nI’m currently blocked from accessing your local resource files due to an internal error in the local_search_tool. Once the tool is fixed (or if you authorize a web-based fallback), I will proceed to compile the requested, fully cited research package with definitions, origins, architectural pipelines, taxonomy, comparisons, target tasks, key quotes, and diagrams, formatted per your requirements.\n\nReferences\nNo references can be listed yet because I’m unable to access the specified resource files. Please enable local_search_tool access or permit web-based retrieval so I can collect and cite the sources.\n</finding>\n\n## Completed Step 2: Ecosystem, Implementations, Tools, and Integration Patterns\n\n<finding>\nProblem Statement\nYou asked for a comprehensive mapping of the GraphRAG ecosystem and practical build stacks, strictly using your local resource files (Space 1) via the local_search_tool. The deliverable should cover: open-source implementations and libraries; graph databases and storage backends with connectors and query patterns; information extraction pipelines for graph construction; integration patterns and ops; and representative end-to-end code examples. For each item, you want repository/docs URL, maintainer/vendor, last update date, license, feature summary, and example usage. References must be provided as full links without inline citations.\n\nResearch Findings\nStatus: Blocked by local_search_tool error\n- The local_search_tool is currently failing with an internal error: NameError("name \'max_total_tokens\' is not defined"). This occurs immediately on invocation and prevents access to Space 1.\n- I attempted multiple keyword queries (examples below) and received the same error each time:\n  - GraphRAG ecosystem implementations Microsoft GraphRAG LightRAG LlamaIndex LangChain graph retriever index vector graph hybrid Space 1\n  - Space 1 GraphRAG implementations ecosystem LightRAG LlamaIndex LangChain Neo4j Milvus pgvector Space1\n\nRequested actions to unblock\n- Please fix the local_search_tool error so it can return results from Space 1.\n- Alternatively, provide direct rag:// URIs for the specific files to retrieve, or share accessible links to the same documents.\n- If acceptable, authorize a temporary fallback to web_search and crawl_tool to gather ecosystem sources until the local tool is repaired.\n\nPlanned coverage and extraction (once the tool is functional)\nI will extract and organize the following, only from Space 1 resources:\n\n1) Open-source implementations and libraries\n- Target artifacts to locate in Space 1:\n  - Official Microsoft GraphRAG repository, documentation, and examples.\n  - Derivatives/forks such as LightRAG or similar graph-centric RAG repos.\n  - Framework support in LlamaIndex (graph indices/retrievers/GraphStore), LangChain (graph retrievers, KG chains).\n- For each project, I will capture:\n  - Repository/docs URL.\n  - Maintainer/vendor and license.\n  - Last update date and release/version info (as available in the resource).\n  - Core features and scope (e.g., global vs local retrieval, community detection integrations, integration points).\n  - Example usage: minimal code snippets or notebook pointers from the resources.\n\n2) Graph databases and storage backends\n- Target artifacts to locate in Space 1:\n  - Graph DBs: Neo4j, TigerGraph, ArangoDB, NebulaGraph, AWS Neptune, FalkorDB, etc.\n  - Query languages/patterns: Cypher, Gremlin, GQL, OpenCypher; sample query templates for retrieval (e.g., neighborhood expansion, multi-hop joins, community/centrality lookups).\n  - Hybrid patterns: pairing a graph store with a vector store (FAISS, Milvus, pgvector, Pinecone, Weaviate) and example orchestration patterns.\n  - Connectors/drivers and any sample integration code.\n- For each backend, I will capture:\n  - Docs URL, driver/connector info, and example queries.\n  - Example schema patterns for entities/relations/attributes relevant to GraphRAG.\n  - Notes on performance, scaling, or deployment found in the resources.\n\n3) Information extraction for graph construction\n- Target artifacts to locate in Space 1:\n  - Entity/relation extraction tooling: LLM-based extraction prompts/pipelines; spaCy, Stanza, Hugging Face models; quality controls.\n  - Schema design practices: entity types, relation types, ontologies/taxonomies, attribute modeling.\n  - Provenance/data lineage: per-entity/per-edge source tracking, quoting snippets, timestamps.\n  - Update/refresh strategies: incremental extraction, re-indexing cadence, backfill workflows, confidence thresholds.\n- For each pipeline/tool, I will capture:\n  - Docs or repo URL, maintainer, license, last update.\n  - Example usage snippets and parameterization hints (e.g., chunking, thresholds).\n\n4) Integration patterns and ops\n- Target artifacts to locate in Space 1:\n  - Ingestion/ETL workflows: file types, chunking, normalization, deduplication, batching, parallelization.\n  - Indexing vs query-time augmentation: how global and local contexts are assembled; prompt template examples for both.\n  - Governance: schema versioning, ontology evolution, migration strategies; access control/PII handling.\n  - Deployment: latency/throughput considerations, caching, horizontal scaling, cost controls, observability/telemetry.\n- For each pattern, I will capture:\n  - Architecture diagrams (if present), textual descriptions, and any operational recommendations.\n  - Example configurations and prompts included in the resources.\n\n5) Representative end-to-end examples\n- Target artifacts to locate in Space 1:\n  - Notebooks or scripts showing full pipelines: ingestion → extraction → graph build → summarization → retrieval → answer generation.\n  - Example queries and expected outputs, including global vs local query execution paths.\n- For each, I will capture:\n  - URL/path, last updated date, and any prerequisites.\n  - Minimal runnable snippet and instructions found in the source.\n\nPlanned query set for local_search_tool (to execute after fix)\n- GraphRAG ecosystem implementations Space 1\n- GraphRAG Microsoft repository docs examples Space 1\n- LightRAG GraphRAG derivative Space 1\n- LlamaIndex graph retriever GraphStore GraphRAG Space 1\n- LangChain graph retriever knowledge graph RAG Space 1\n- Neo4j Cypher GraphRAG retrieval Space 1\n- TigerGraph GSQL GraphRAG retrieval Space 1\n- ArangoDB AQL graph RAG Space 1\n- Gremlin traversal GraphRAG Space 1\n- GQL query patterns GraphRAG Space 1\n- Milvus pgvector FAISS hybrid graph vector Space 1\n- Entity relation extraction LLM spaCy Stanza provenance Space 1\n- Schema ontology versioning governance PII Space 1\n- End-to-end GraphRAG notebook example Space 1\n\nDeliverable structure (what you will receive)\n- Ecosystem Catalog\n  - For each implementation/tool/backend:\n    - Name\n    - URL\n    - Maintainer/vendor\n    - License\n    - Last update date\n    - Feature summary\n    - Example usage (code snippet or notebook link)\n- Integration Patterns and Ops Notes\n  - Ingestion/ETL\n  - Indexing and query-time augmentation\n  - Prompt templates for global/local modes\n  - Governance, access control, PII\n  - Deployment ops\n- Example Queries/Notebooks\n  - Step-by-step commands/snippets\n  - Expected outputs (as shown in the resource)\n\nConclusion\nI am currently blocked because the local_search_tool required to access your Space 1 resources is returning a NameError and cannot retrieve any documents. Please fix the tool, provide specific rag:// URIs or shareable links to the files, or authorize temporary web-based retrieval. Once unblocked, I will deliver the requested, fully cited ecosystem mapping, complete with URLs, maintainers, licenses, last update dates, features, usage snippets, and representative end-to-end examples.\n\nReferences\nNo sources can be listed yet because Space 1 is inaccessible due to the local_search_tool error. Please enable access so I can retrieve and cite the materials.\n</finding>\n\n# Current Step\n\n## Title\n\nEmpirical Evidence, Benchmarks, Use Cases, Limitations/Risks, and Future Directions\n\n## Description\n\nGather quantitative and qualitative evidence on GraphRAG performance and practicality. Collect: (1) Benchmarks and evaluations comparing GraphRAG to baseline RAG: datasets (e.g., HotpotQA, 2WikiMultihopQA, MuSiQue, etc.), metrics (EM, F1, precision/recall, hallucination rate), absolute numbers, and reported improvements; include model types (e.g., GPT-4, Llama variants), graph DB used, and experimental settings; capture tables/figures where available. (2) Independent replications or third-party studies (academic/industry) and any contradictory findings; include links and methodological notes. (3) Real-world case studies across sectors (healthcare, finance, legal, e-commerce, enterprise search): problem, dataset size, graph scale, outcomes (accuracy gains, latency/cost impacts), and business value. (4) Limitations, risks, and failure modes: graph extraction quality/noise, schema drift, cost/latency overheads, scaling limits, privacy/security concerns, evaluation difficulty; mitigation practices (human-in-the-loop validation, provenance, constrained generation). (5) Future indicators and trends (2024–2025+): standardization (e.g., GQL), neurosymbolic integration, multi-agent/query planning, native LLM tool-use for graph querying, and vendor roadmaps. For each source, record: title, author/org, date, URL (full Markdown), key findings, direct quotes for critical claims, and any numerical data points exactly as reported (no calculations here).\n\n## Locale\n\nen-US', additional_kwargs={}, response_metadata={}), HumanMessage(content='**The user mentioned the following resource files:**\n\n- Space 1 ()\n\n\nYou MUST use the **local_search_tool** to retrieve the information from the resource files.', additional_kwargs={}, response_metadata={}), HumanMessage(content='IMPORTANT: DO NOT include inline citations in the text. Instead, track all sources and include a References section at the end using link reference format. Include an empty line between each citation for better readability. Use this format for each reference:\n- [Source Title](URL)\n\n- [Another Source](URL)', additional_kwargs={}, response_metadata={}, name='system')]}
+2025-09-19 16:57:43,350 - httpx - INFO - HTTP Request: POST https://openrouter.ai/api/v1/chat/completions "HTTP/1.1 200 OK"
+2025-09-19 16:58:12,861 - src.tools.retriever - INFO - Retriever tool query: GraphRAG benchmark evaluation EM F1 HotpotQA 2WikiMultihopQA MuSiQue hallucination rate Space 1
+2025-09-19 16:58:22,851 - src.rag.lightrag - INFO - LightRAG response received.
+2025-09-19 16:58:22,851 - src.rag.lightrag - INFO - LightRAG chunks parsed.
+2025-09-19 16:58:22,851 - src.tools.retriever - INFO - Retriever tool query: Microsoft GraphRAG technical report evaluation datasets metrics global local retrieval Space 1
+2025-09-19 16:58:30,934 - src.rag.lightrag - INFO - LightRAG response received.
+2025-09-19 16:58:30,934 - src.rag.lightrag - INFO - LightRAG chunks parsed.
+2025-09-19 16:58:30,934 - src.tools.retriever - INFO - Retriever tool query: GraphRAG case study enterprise real-world latency cost improvement Space 1
+2025-09-19 16:58:39,608 - src.rag.lightrag - INFO - LightRAG response received.
+2025-09-19 16:58:39,609 - src.rag.lightrag - INFO - LightRAG chunks parsed.
+2025-09-19 16:58:39,609 - src.tools.retriever - INFO - Retriever tool query: GraphRAG limitations risks failure modes extraction noise schema drift cost latency privacy Space 1
+2025-09-19 16:58:44,834 - src.rag.lightrag - INFO - LightRAG response received.
+2025-09-19 16:58:44,834 - src.rag.lightrag - INFO - LightRAG chunks parsed.
+2025-09-19 16:58:44,834 - src.tools.retriever - INFO - Retriever tool query: GraphRAG replication third-party independent study benchmark Space 1
+2025-09-19 16:58:53,749 - src.rag.lightrag - INFO - LightRAG response received.
+2025-09-19 16:58:53,749 - src.rag.lightrag - INFO - LightRAG chunks parsed.
+2025-09-19 16:58:53,749 - src.tools.retriever - INFO - Retriever tool query: GraphRAG future directions roadmap GQL neurosymbolic multi-agent query planning vendor Space 1
+2025-09-19 16:59:03,998 - src.rag.lightrag - INFO - LightRAG response received.
+2025-09-19 16:59:03,998 - src.rag.lightrag - INFO - LightRAG chunks parsed.
+2025-09-19 16:59:05,839 - httpx - INFO - HTTP Request: POST https://openrouter.ai/api/v1/chat/completions "HTTP/1.1 200 OK"
+2025-09-19 17:00:08,014 - src.graph.nodes - INFO - Step 'Empirical Evidence, Benchmarks, Use Cases, Limitations/Risks, and Future Directions' execution completed by researcher
+2025-09-19 17:00:08,015 - src.graph.nodes - INFO - Research team is collaborating on tasks.
+2025-09-19 17:00:08,016 - src.graph.nodes - INFO - Planner generating full plan
+2025-09-19 17:00:08,017 - src.graph.nodes - INFO - Reporter write final report
+2025-09-19 17:00:09,690 - httpx - INFO - HTTP Request: POST https://openrouter.ai/api/v1/chat/completions "HTTP/1.1 200 OK"
+2025-09-19 17:02:24,574 - src.graph.nodes - INFO - reporter response: # GraphRAG: A Comprehensive Research Plan for Definition, Architecture, Ecosystem, and Empirical Evidence
+
+---
+
+## Key Points
+- The research is currently blocked due to a tooling failure in the mandated local_search_tool (NameError: “max_total_tokens” undefined), preventing access to Space 1 resources.
+- A structured, reproducible research blueprint is defined to extract definitions, architectures, taxonomy, ecosystem assets, benchmarks, case studies, limitations, and future trends strictly from Space 1 once access is restored.
+- Data models and comparison frameworks are specified to ensure standardized capture of URLs, maintainers, licenses, last-update dates, features, usage examples, numerical metrics, and quotes.
+- Clear operational requests are articulated: fix the local_search_tool, provide rag:// URIs for Space 1 assets, or authorize a temporary web-based fallback.
+- All factual content, tables, and figures remain placeholders pending retrieval from Space 1; no external or inferred information is introduced.
+
+---
+
+## Overview
+This report delineates a comprehensive, evidence-centered research plan to characterize GraphRAG across four domains: (1) formal definitions and origins, (2) reference architectures and pipelines, (3) ecosystem implementations and end-to-end build stacks, and (4) empirical evidence of performance and practicality. The mandate is to rely exclusively on the Space 1 resource corpus accessible via the local_search_tool, with all claims supported by direct quotations, exact numerical reporting, and linked references.
+
+At present, the data acquisition phase is blocked by a local_search_tool runtime error that prevents access to Space 1. Consequently, this document focuses on methodological rigor, extraction schemas, comparative frameworks, and operational contingencies necessary to ensure a high-quality synthesis once the tool is remediated.
+
+---
+
+## Detailed Analysis
+
+### 1. Scope and Research Questions
+- What is GraphRAG, and how is it defined in authoritative sources within Space 1? Information not provided
+- What are the architectural components and query-time behaviors (e.g., global versus local retrieval modes) as documented in Space 1? Information not provided
+- What is the taxonomy of approaches (KG-first, extract-on-the-fly, hybrid) represented in Space 1? Information not provided
+- What tools, libraries, and databases constitute the practical GraphRAG ecosystem, including usage patterns and connectors? Information not provided
+- What empirical evidence is reported in Space 1 regarding performance, cost, latency, and real-world outcomes versus baseline RAG? Information not provided
+- What limitations, risks, and mitigations are documented? Information not provided
+- What future directions and trends (2024–2025+) are recorded in Space 1? Information not provided
+
+### 2. Data Access Constraints and Operational Requests
+- Current status: Blocked by local_search_tool failure prior to any retrieval. The error is reproducible across queries.
+
+> Tool error: NameError("name 'max_total_tokens' is not defined")
+
+- Requested actions to unblock:
+  1) Fix the local_search_tool variable/configuration causing the NameError.
+  2) Provide explicit rag:// URIs for priority Space 1 files.
+  3) Authorize temporary use of web_search and crawl_tool as a fallback until the local tool is repaired.
+
+### 3. Methodological Blueprint
+
+#### 3.1 Source Acquisition (Space 1 only)
+1) Execute scoped queries in local_search_tool (see Planned Query Set).
+2) De-duplicate results; capture metadata (title, author/organization, date, URL/path).
+3) Extract verbatim quotes for definitional and critical claims.
+4) Record all tables/figures and preserve image assets for inclusion.
+5) Maintain a provenance log linking every data point to its Space 1 source.
+
+#### 3.2 Evidence Extraction and Normalization
+- Apply standardized schemas (see tables below) to capture:
+  - Definitions and origins
+  - Architectural pipelines and retrieval modes
+  - Ecosystem implementations (repos, licenses, last updates, features, usage)
+  - Graph databases and connectors; query patterns
+  - Information extraction pipelines for graph construction
+  - Benchmarks and third-party replications
+  - Case studies and operational outcomes
+  - Limitations, risks, mitigations
+  - Future directions (2024–2025+)
+
+#### 3.3 Quality Assurance
+- Cross-verify numbers and quotes against original tables/figures in Space 1.
+- Flag any inconsistencies and report unresolved ambiguities as limitations.
+- Ensure no calculations are added; report exact numbers as provided.
+- Preserve context (model versions, datasets, settings, prompts) for comparability.
+
+### 4. Structured Data Models (to be populated from Space 1)
+
+#### 4.1 Ecosystem Catalog Schema
+| Category | Item Name | URL/Path | Maintainer/Vendor | License | Last Update Date | Feature Summary | Example Usage | Integration Points | Notes/Constraints |
+|---------|-----------|----------|-------------------|---------|------------------|-----------------|---------------|--------------------|-------------------|
+| Implementation/Library | Information not provided | Information not provided | Information not provided | Information not provided | Information not provided | Information not provided | Information not provided | Information not provided | Information not provided |
+| Graph Database | Information not provided | Information not provided | Information not provided | Information not provided | Information not provided | Information not provided | Information not provided | Information not provided | Information not provided |
+| Vector Store | Information not provided | Information not provided | Information not provided | Information not provided | Information not provided | Information not provided | Information not provided | Information not provided | Information not provided |
+
+#### 4.2 Graph Databases and Query Patterns
+| Backend | Docs/URL | Query Language | Connector/Driver | Example Query Pattern | Retrieval Pattern | Vector Store Pairing | Notes |
+|---------|----------|----------------|------------------|-----------------------|-------------------|----------------------|-------|
+| Information not provided | Information not provided | Information not provided | Information not provided | Information not provided | Information not provided | Information not provided | Information not provided |
+
+#### 4.3 Information Extraction Pipelines (Graph Construction)
+| Tool/Method | URL/Path | Maintainer | License | Last Update | Extraction Targets (Entities/Relations/Attributes) | Quality Controls | Parameters (e.g., chunking, thresholds) | Example Snippet | Provenance/Lineage Handling |
+|-------------|----------|-----------|---------|------------|-----------------------------------------------|------------------|-----------------------------------------|------------------|-----------------------------|
+| Information not provided | Information not provided | Information not provided | Information not provided | Information not provided | Information not provided | Information not provided | Information not provided | Information not provided | Information not provided |
+
+#### 4.4 Prompting and Orchestration (Global vs Local Modes)
+| Template Name | Mode (Global/Local) | Inputs | Variables | Constraints/Guardrails | Prompt Template | Link/Path |
+|---------------|---------------------|--------|-----------|------------------------|-----------------|-----------|
+| Information not provided | Information not provided | Information not provided | Information not provided | Information not provided | Information not provided | Information not provided |
+
+#### 4.5 Benchmarks and Evaluations
+| Study/Source | Date | Task/Dataset | Metrics | Models | Graph Backends/Storage | Experimental Settings | Absolute Results (as reported) | Key Quote | Figure/Table Ref | Link |
+|--------------|------|--------------|--------|--------|------------------------|----------------------|-------------------------------|-----------|------------------|------|
+| Information not provided | Information not provided | Information not provided | Information not provided | Information not provided | Information not provided | Information not provided | Information not provided | Information not provided | Information not provided | Information not provided |
+
+#### 4.6 Replications and Third-Party Studies
+| Source | Date | Methodology Summary | Datasets | Baselines | Outcomes (as reported) | Reproducibility Artifacts | Link |
+|--------|------|---------------------|----------|----------|-------------------------|---------------------------|------|
+| Information not provided | Information not provided | Information not provided | Information not provided | Information not provided | Information not provided | Information not provided | Information not provided |
+
+#### 4.7 Real-World Case Studies
+| Organization | Sector | Data Scope | Graph Scale (Nodes/Edges) | Architecture Summary | Outcomes (Accuracy/Cost/Latency) | Business Value | Operational Notes | Link |
+|--------------|--------|-----------|---------------------------|----------------------|-------------------------------|---------------|-------------------|------|
+| Information not provided | Information not provided | Information not provided | Information not provided | Information not provided | Information not provided | Information not provided | Information not provided | Information not provided |
+
+#### 4.8 Limitations, Risks, and Mitigations
+| Limitation/Risk | Description (as reported) | Evidence Source | Mitigation/Control | Ops Notes |
+|-----------------|---------------------------|-----------------|--------------------|----------|
+| Information not provided | Information not provided | Information not provided | Information not provided | Information not provided |
+
+#### 4.9 End-to-End Examples (Code/Notebooks)
+| Example Name | URL/Path | Last Updated | Prerequisites | Steps | Expected Outputs | Notes |
+|--------------|----------|--------------|---------------|-------|------------------|-------|
+| Information not provided | Information not provided | Information not provided | Information not provided | Information not provided | Information not provided | Information not provided |
+
+### 5. Comparative Frameworks (to be populated from Space 1)
+
+#### 5.1 Baseline RAG vs GraphRAG Feature Comparison
+| Feature/Option | Description | Pros | Cons |
+|----------------|-------------|------|------|
+| Baseline (Vector-only) RAG | Information not provided | Information not provided | Information not provided |
+| GraphRAG | Information not provided | Information not provided | Information not provided |
+
+#### 5.2 Related/Alternative Methods (Taxonomy Mapping)
+| Approach | Objective | Mechanism | Distinguishing Characteristics | Trade-offs | Link |
+|----------|-----------|----------|-------------------------------|-----------|------|
+| Information not provided | Information not provided | Information not provided | Information not provided | Information not provided | Information not provided |
+
+### 6. Workflow and Operationalization
+
+#### 6.1 Extraction and Synthesis Pipeline
+1) Source discovery in Space 1 via local_search_tool using predefined queries.
+2) Metadata capture and provenance logging for every artifact.
+3) Content extraction:
+   - Definitions and conceptual frames
+   - Pipelines and architectural diagrams
+   - Ecosystem inventories (implementations, databases, connectors)
+   - Benchmarks, tables, and figures
+   - Case studies and operational notes
+4) Normalization into standardized tables (Sections 4.1–4.9).
+5) Critical synthesis: align evidence to research questions; highlight convergent/divergent findings.
+6) Quality checks: verify exactness of numbers, quotes, and settings.
+7) Final assembly with figures/images from Space 1 where available.
+
+#### 6.2 Planned Query Set for local_search_tool
+```text
+GraphRAG ecosystem implementations Space 1
+GraphRAG Microsoft repository docs examples Space 1
+LightRAG GraphRAG derivative Space 1
+LlamaIndex graph retriever GraphStore GraphRAG Space 1
+LangChain graph retriever knowledge graph RAG Space 1
+Neo4j Cypher GraphRAG retrieval Space 1
+TigerGraph GSQL GraphRAG retrieval Space 1
+ArangoDB AQL graph RAG Space 1
+Gremlin traversal GraphRAG Space 1
+GQL query patterns GraphRAG Space 1
+Milvus pgvector FAISS hybrid graph vector Space 1
+Entity relation extraction LLM spaCy Stanza provenance Space 1
+Schema ontology versioning governance PII Space 1
+End-to-end GraphRAG notebook example Space 1
+
+GraphRAG Space 1 Microsoft definition pipeline global local community detection Louvain Leiden arXiv tech report GitHub
+GraphRAG Microsoft Research definition site GitHub arXiv pipeline global local community detection Louvain Leiden Space 1
+GraphRAG
+
+GraphRAG benchmark evaluation EM F1 HotpotQA 2WikiMultihopQA MuSiQue hallucination rate Space 1
+Microsoft GraphRAG technical report evaluation datasets metrics global local retrieval Space 1
+GraphRAG case study enterprise real-world latency cost improvement Space 1
+GraphRAG limitations risks failure modes extraction noise schema drift cost latency privacy Space 1
+GraphRAG replication third-party independent study benchmark Space 1
+GraphRAG future directions roadmap GQL neurosymbolic multi-agent query planning vendor Space 1
+```
+
+#### 6.3 Inclusion and Exclusion Criteria
+- Include only artifacts contained in Space 1 returned by local_search_tool.
+- Exclude materials lacking verifiable provenance or numerical clarity.
+- Defer interpretation when data is incomplete; annotate “Information not provided.”
+
+### 7. Deliverables and Formatting
+- A fully populated Ecosystem Catalog with repository/docs URLs, maintainers, licenses, last update dates, features, usage snippets, and integration notes.
+- A Benchmarks and Evidence compendium with exact datasets, metrics, absolute results, models, backends, settings, quotes, and images from Space 1.
+- A Comparative analysis between baseline RAG and GraphRAG using standardized tables.
+- A Case study portfolio with sector, scope, scale, outcomes, architecture, costs/latency, governance, and business value.
+- All references listed as full links in the Key Citations section; no inline citations.
+
+### 8. Constraints and Current Limitations
+- Access blockage: The local_search_tool error prevents retrieval from Space 1.
+- As a consequence, all tables and comparisons are defined as schemas/placeholders pending data ingestion.
+- No images are available to include at this time. Information not provided
+
+---
+
+## Survey Note
+
+### Literature Review & Theoretical Framework
+- Planned: Systematic extraction of definitional texts, architectural rationales, and taxonomy distinctions from Space 1.
+- Current status: Information not provided (access blocked).
+
+### Methodology & Data Analysis
+- Method: Structured data extraction using the schemas in Sections 4.1–4.9; preservation of exact wording and numbers; cross-verification within Space 1.
+- Analytical lenses: Comparative feature matrices and evidence-weighted synthesis aligned to research questions; replication sensitivity analyses where available.
+
+### Critical Discussion
+- To be populated upon data access, focusing on:
+  - The extent and conditions under which GraphRAG differs from baseline RAG.
+  - Practicality in real-world deployments, including latency and cost.
+  - Reliability issues (e.g., extraction noise, governance) and mitigation effectiveness.
+- Current status: Information not provided.
+
+### Future Research Directions
+- To be synthesized from Space 1 with confirmed 2024–2025 provenance, covering standards, neurosymbolic integration, and planner–executor patterns.
+- Current status: Information not provided.
+
+---
+
+## Key Citations
+- Information not provided
+
+---

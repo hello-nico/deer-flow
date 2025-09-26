@@ -1,0 +1,95 @@
+2025-09-19 10:06:59,686 - src.graph.nodes - INFO - Planner response: {
+    "locale": "en-US",
+    "has_enough_context": false,
+    "thought": "The user asks for a clear explanation of RAG (Retrieval-Augmented Generation) technology. To produce a thorough report, we must gather authoritative definitions, historical evolution, architectures, implementation patterns, tools, evaluation methods, case studies, quantitative metrics, risks, governance, and future trends—far beyond the brief overview currently available.",
+    "title": "Comprehensive Research Plan on Retrieval-Augmented Generation (RAG) Technology",
+    "steps": [
+        {
+            "need_search": true,
+            "title": "Foundations, Definitions, and Evolution of RAG",
+            "description": "Collect authoritative definitions and the historical evolution of RAG, including: (1) Formal definitions from primary and secondary sources: Wikipedia (https://en.wikipedia.org/wiki/Retrieval-augmented_generation), Google Cloud docs on RAG (https://cloud.google.com/), AWS, Azure, Meta/FAIR blogs, OpenAI, Anthropic, Cohere, and academic surveys (e.g., arXiv). (2) Key original and related papers with bibliographic details and core contributions: RAG by Lewis et al. 2020 (arXiv), REALM (Guu et al. 2020), DPR (Karpukhin et al. 2020), FiD (Izacard & Grave 2021), RETRO (Borgeaud et al. 2021), ATLAS (Izacard et al. 2022), SELF-RAG (Shuster et al. 2023), FreshQA and other up-to-date retrieval-sensitive benchmarks. (3) A timeline of major milestones (2019–2025) showing how RAG evolved and diverged from open-domain QA and knowledge-grounded generation. (4) Clear distinctions and relationships: RAG vs fine-tuning, RAG vs long-context models, RAG vs tool/function calling, hybrid search vs dense-only retrieval, RAG vs knowledge-graph and SQL-grounded approaches. (5) Core terminology and components glossary: retrievers (sparse/dense/hybrid), indices (FAISS/HNSW/IVF), chunking, embeddings, rerankers, query expansion, multi-hop retrieval, and grounding. Include multiple perspectives and any critiques or limitations highlighted in academic and industry sources.",
+            "step_type": "research"
+        },
+        {
+            "need_search": true,
+            "title": "Architectures, Implementation Patterns, Tools, and Evaluation",
+            "description": "Gather detailed implementation data and reference architectures: (1) System architectures from major cloud providers and vendors: Google Vertex AI Search/RAG patterns, AWS Kendra + Bedrock patterns, Azure AI Search + OpenAI/Azure OpenAI patterns; include architecture diagrams, components, and integration points. (2) Tools/frameworks: LangChain, LlamaIndex, Haystack, guidance on when to use each; plugin ecosystems; typical pipelines (ingest, preprocess, embed, index, retrieve, rerank, generate, post-process). (3) Vector databases and search tech: Pinecone, Weaviate, Milvus, FAISS, Qdrant, pgvector/Postgres, OpenSearch kNN, Elasticsearch; collect capabilities (index types, filtering/RBAC, hybrid lexical+vector support, multi-tenancy, scalability, latency/throughput ranges as reported), and pricing/operational considerations if available. (4) Embedding models and rerankers: OpenAI text-embedding-3 family, Cohere embeddings and Rerank, bge and e5 families, sentence-transformers, ColBERTv2; gather recommended use-cases, dimensionality, multilingual support, licensing constraints. (5) Retrieval and chunking best practices with concrete parameter ranges reported by practitioners: chunk size/overlap heuristics, top-k defaults, MMR, hybrid weighting, query rewriting/expansion (Q2Q), multi-hop retrieval, caching strategies, streaming/real-time connectors, structured data retrieval (SQL-RAG), knowledge-graph RAG, and GraphRAG approaches. (6) Evaluation frameworks and metrics: RAGAS, TruLens, DeepEval, MLflow eval integrations; metrics like precision@k, recall@k, MRR/NDCG, exact match/F1 for QA, faithfulness/groundedness, answer relevance, hallucination rate; include dataset benchmarks (KILT, NQ-Open, HotpotQA, TriviaQA, PopQA, FreshQA) and any reported SOTA or comparative results for RAG vs non-RAG baselines. (7) Performance and cost guidance reported publicly: latency budgets per stage (retrieval/rerank/generation), throughput considerations, context window costs, approximate cost components (embedding, storage, retrieval, generation) from vendor docs/blogs.",
+            "step_type": "research"
+        },
+        {
+            "need_search": true,
+            "title": "Case Studies, Risks, Compliance, and Future Outlook",
+            "description": "Collect real-world evidence and forward-looking insights: (1) Case studies across industries (financial services, healthcare, legal, support, e-commerce, developer productivity): deployments such as Morgan Stanley advisor search, ServiceNow, Notion Q&A, Slack/Atlassian assistants, Shopify, Databricks examples; capture quantitative outcomes (accuracy lifts, deflection rates, time saved), stack details, and citations. (2) Risks and failures: retrieval failures, stale data, domain shift, conflicting sources, prompt injection via retrieved documents, data poisoning, privacy/PII leakage, RBAC bypass, jailbreak propagation through retrieval; gather documented incidents and recommended mitigations (document sanitization, provenance, content safety filters, signed data, allow/deny lists, retrieval-time guardrails, isolation). (3) Security and compliance requirements: data residency, encryption at rest/in transit, private connectivity/VPC, authentication/authorization, row/attribute-level filtering, auditing; references from major clouds (Azure, AWS, Google) and vector DB vendors. (4) Governance and quality management: human-in-the-loop review, feedback loops, drift monitoring, evaluation cadence, dataset curation, red-teaming. (5) Alternatives and trade-offs: where fine-tuning or long-context may outperform or complement RAG; comparisons and ablation studies quantifying trade-offs. (6) Future indicators and trends (2024–2026): agentic retrieval, multi-agent/iterative retrieval, multimodal RAG (text+images/audio/code/logs), retrieval inside LLMs, larger context windows vs retrieval, memory architectures, on-device/private RAG. Include both optimistic and skeptical viewpoints and credible forecasts.",
+            "step_type": "research"
+        }
+    ]
+}
+2025-09-19 10:06:59,689 - src.graph.nodes - INFO - Research team is collaborating on tasks.
+2025-09-19 10:06:59,690 - src.graph.nodes - INFO - Researcher node is researching.
+2025-09-19 10:06:59,691 - src.tools.search - INFO - Tavily search configuration loaded: include_domains=[], exclude_domains=[]
+2025-09-19 10:06:59,691 - src.tools.retriever - INFO - create retriever tool: lightrag
+2025-09-19 10:06:59,691 - src.graph.nodes - INFO - Researcher tools: [RetrieverTool(retriever=<src.rag.lightrag.LightRAGProvider object at 0x7c1b20bd8110>, resources=[Resource(uri='rag://space1', title='Space 1', description='')]), LoggedTavilySearchWithImages(name='web_search', max_results=3, include_raw_content=True, include_images=True, api_wrapper=EnhancedTavilySearchAPIWrapper(tavily_api_key=SecretStr('**********'), api_base_url=None), include_image_descriptions=True), StructuredTool(name='crawl_tool', description='Use this to crawl a url and get a readable content in markdown format.', args_schema=<class 'langchain_core.utils.pydantic.crawl_tool'>, func=<function crawl_tool at 0x7c1ae57beac0>)]
+2025-09-19 10:06:59,700 - src.graph.nodes - INFO - Executing step: Foundations, Definitions, and Evolution of RAG, agent: researcher
+2025-09-19 10:06:59,700 - src.graph.nodes - INFO - Recursion limit set to: 30
+2025-09-19 10:06:59,700 - src.graph.nodes - INFO - Agent input: {'messages': [HumanMessage(content='# Research Topic\n\nComprehensive Research Plan on Retrieval-Augmented Generation (RAG) Technology\n\n# Current Step\n\n## Title\n\nFoundations, Definitions, and Evolution of RAG\n\n## Description\n\nCollect authoritative definitions and the historical evolution of RAG, including: (1) Formal definitions from primary and secondary sources: Wikipedia (https://en.wikipedia.org/wiki/Retrieval-augmented_generation), Google Cloud docs on RAG (https://cloud.google.com/), AWS, Azure, Meta/FAIR blogs, OpenAI, Anthropic, Cohere, and academic surveys (e.g., arXiv). (2) Key original and related papers with bibliographic details and core contributions: RAG by Lewis et al. 2020 (arXiv), REALM (Guu et al. 2020), DPR (Karpukhin et al. 2020), FiD (Izacard & Grave 2021), RETRO (Borgeaud et al. 2021), ATLAS (Izacard et al. 2022), SELF-RAG (Shuster et al. 2023), FreshQA and other up-to-date retrieval-sensitive benchmarks. (3) A timeline of major milestones (2019–2025) showing how RAG evolved and diverged from open-domain QA and knowledge-grounded generation. (4) Clear distinctions and relationships: RAG vs fine-tuning, RAG vs long-context models, RAG vs tool/function calling, hybrid search vs dense-only retrieval, RAG vs knowledge-graph and SQL-grounded approaches. (5) Core terminology and components glossary: retrievers (sparse/dense/hybrid), indices (FAISS/HNSW/IVF), chunking, embeddings, rerankers, query expansion, multi-hop retrieval, and grounding. Include multiple perspectives and any critiques or limitations highlighted in academic and industry sources.\n\n## Locale\n\nen-US', additional_kwargs={}, response_metadata={}), HumanMessage(content='**The user mentioned the following resource files:**\n\n- Space 1 ()\n\n\nYou MUST use the **local_search_tool** to retrieve the information from the resource files.', additional_kwargs={}, response_metadata={}), HumanMessage(content='IMPORTANT: DO NOT include inline citations in the text. Instead, track all sources and include a References section at the end using link reference format. Include an empty line between each citation for better readability. Use this format for each reference:\n- [Source Title](URL)\n\n- [Another Source](URL)', additional_kwargs={}, response_metadata={}, name='system')]}
+2025-09-19 10:07:01,066 - httpx - INFO - HTTP Request: POST https://openrouter.ai/api/v1/chat/completions "HTTP/1.1 200 OK"
+2025-09-19 10:07:10,150 - src.tools.retriever - INFO - Retriever tool query: Retrieval-Augmented Generation RAG definitions timeline Lewis et al. 2020 REALM DPR FiD RETRO ATLAS SELF-RAG FreshQA benchmarks
+开始调用到LightRAG服务
+2025-09-19 10:07:10,163 - src.rag.lightrag - INFO - LightRAG returned no 'chunks' field.
+2025-09-19 10:07:11,085 - httpx - INFO - HTTP Request: POST https://openrouter.ai/api/v1/chat/completions "HTTP/1.1 200 OK"
+2025-09-19 10:07:28,829 - httpx - INFO - HTTP Request: POST https://openrouter.ai/api/v1/chat/completions "HTTP/1.1 200 OK"
+2025-09-19 10:08:06,731 - httpx - INFO - HTTP Request: POST https://openrouter.ai/api/v1/chat/completions "HTTP/1.1 400 Bad Request"
+2025-09-19 10:08:06,733 - src.server.app - ERROR - Error during graph execution
+Traceback (most recent call last):
+  File "/home/chencheng/py/src/deer-flow/src/server/app.py", line 249, in _stream_graph_events
+    async for agent, _, event_data in graph_instance.astream(
+  File "/home/chencheng/py/src/deer-flow/.venv/lib/python3.12/site-packages/langgraph/pregel/__init__.py", line 2759, in astream
+    async for _ in runner.atick(
+  File "/home/chencheng/py/src/deer-flow/src/graph/nodes.py", line 491, in researcher_node
+    return await _setup_and_execute_agent_step(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/chencheng/py/src/deer-flow/src/graph/nodes.py", line 477, in _setup_and_execute_agent_step
+    return await _execute_agent_step(state, agent, agent_type)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/chencheng/py/src/deer-flow/src/graph/nodes.py", line 394, in _execute_agent_step
+    result = await agent.ainvoke(
+             ^^^^^^^^^^^^^^^^^^^^
+  File "/home/chencheng/py/src/deer-flow/.venv/lib/python3.12/site-packages/langgraph/pregel/__init__.py", line 2892, in ainvoke
+    async for chunk in self.astream(
+  File "/home/chencheng/py/src/deer-flow/.venv/lib/python3.12/site-packages/langgraph/pregel/__init__.py", line 2759, in astream
+    async for _ in runner.atick(
+  File "/home/chencheng/py/src/deer-flow/.venv/lib/python3.12/site-packages/langgraph/prebuilt/chat_agent_executor.py", line 763, in acall_model
+    response = cast(AIMessage, await model_runnable.ainvoke(state, config))
+                               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/chencheng/py/src/deer-flow/.venv/lib/python3.12/site-packages/langchain_core/runnables/base.py", line 3088, in ainvoke
+    input_ = await coro_with_context(part(), context, create_task=True)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/chencheng/py/src/deer-flow/.venv/lib/python3.12/site-packages/langchain_core/runnables/base.py", line 5447, in ainvoke
+    return await self.bound.ainvoke(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/chencheng/py/src/deer-flow/.venv/lib/python3.12/site-packages/langchain_core/language_models/chat_models.py", line 417, in ainvoke
+    llm_result = await self.agenerate_prompt(
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/chencheng/py/src/deer-flow/.venv/lib/python3.12/site-packages/langchain_core/language_models/chat_models.py", line 991, in agenerate_prompt
+    return await self.agenerate(
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "/home/chencheng/py/src/deer-flow/.venv/lib/python3.12/site-packages/langchain_core/language_models/chat_models.py", line 949, in agenerate
+    raise exceptions[0]
+  File "/home/chencheng/py/src/deer-flow/.venv/lib/python3.12/site-packages/langchain_core/language_models/chat_models.py", line 1106, in _agenerate_with_cache
+    async for chunk in self._astream(messages, stop=stop, **kwargs):
+  File "/home/chencheng/py/src/deer-flow/.venv/lib/python3.12/site-packages/langchain_openai/chat_models/base.py", line 2493, in _astream
+    async for chunk in super()._astream(*args, **kwargs):
+  File "/home/chencheng/py/src/deer-flow/.venv/lib/python3.12/site-packages/langchain_openai/chat_models/base.py", line 1111, in _astream
+    response = await self.async_client.create(**payload)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/chencheng/py/src/deer-flow/.venv/lib/python3.12/site-packages/openai/resources/chat/completions/completions.py", line 2028, in create
+    return await self._post(
+           ^^^^^^^^^^^^^^^^^
+  File "/home/chencheng/py/src/deer-flow/.venv/lib/python3.12/site-packages/openai/_base_client.py", line 1748, in post
+    return await self.request(cast_to, opts, stream=stream, stream_cls=stream_cls)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/chencheng/py/src/deer-flow/.venv/lib/python3.12/site-packages/openai/_base_client.py", line 1555, in request
+    raise self._make_status_error_from_response(err.response) from None
+openai.BadRequestError: Error code: 400 - {'error': {'message': 'This endpoint\'s maximum context length is 400000 tokens. However, you requested about 485343 tokens (485086 of text input, 257 of tool input). Please reduce the length of either one, or use the "middle-out" transform to compress your prompt automatically.', 'code': 400, 'metadata': {'provider_name': None}}}
+During task with name 'agent' and id 'aa469520-98db-805c-e7eb-1e831069b316'
+During task with name 'researcher' and id '436eb57d-2aed-5162-693b-792887f9d5f3'

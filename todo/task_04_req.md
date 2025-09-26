@@ -1,0 +1,11 @@
+我想将tongyi-deepresearch集成到deer-flow中，首先是将增加一个可插拔的deep-researcher节点，这个节点由tongyi-deepresearch提供。
+通过设置一个开关deep-researcher-enable来控制是否启用这个节点。当这个开关启动的时候，整个stategraph会使用tongyi-deepresearcher来替代researcher节点。
+目前我已经将相关的一些代码放在tongyi-ds目录下，你可以参考这个目录下的代码进行实现。
+可能最大的问题是：
+
+1. 如何处理tongyi的输出，整合到当前的api接口中；
+2. tongyi本身不兼容openai function_calling，需要进行适配（我已经提供一些参考代码）
+3. tongyi本身这套agent如何集成到langgraph中，也是需要考虑的（我已经提供一些参考代码）
+4. tongyi-deepresearch的vist_tool似乎有点问题使用的jina的api，我希望能够替换成当前我们已经使用的search工具。
+
+其他如果还有问题，你可以直接反馈出来。

@@ -1,0 +1,61 @@
+2025-09-23 19:40:12,319 - src.prompt_enhancer.graph.enhancer_node - INFO - Enhancing user prompt...
+2025-09-23 19:40:15,137 - httpx - INFO - HTTP Request: POST https://openrouter.ai/api/v1/chat/completions "HTTP/1.1 200 OK"
+2025-09-23 19:40:16,186 - src.prompt_enhancer.graph.enhancer_node - INFO - Prompt enhancement completed successfully
+2025-09-23 19:40:16,187 - src.server.app - INFO - Enhanced query (English): Provide a comprehensive explanation of "Self-RAG" (Retrieval Augmented Generation).
+
+Your explanation should cover the following aspects:
+1.  **Definition**: Clearly define what Self-RAG is and its core concept.
+2.  **Distinction from Traditional RAG**: Explain how Self-RAG differs from conventional Retrieval Augmented Generation (RAG) systems. Highlight the key innovation or additional capabilities it introduces.
+3.  **Mechanism/How it works**: Describe the internal process or architecture of Self-RAG. Detail how it performs self-reflection and decides when and what to retrieve.
+4.  **Benefits/Advantages**: Discuss the primary advantages and improvements Self-RAG offers over standard RAG, such as enhanced accuracy, reduced hallucinations, or improved adaptability.
+5.  **Use Cases/Applications**: Provide examples of scenarios or tasks where Self-RAG would be particularly effective or beneficial.
+
+Structure your response with clear headings for each section. Ensure the language is accessible to someone familiar with large language models and RAG, but not necessarily a Self-RAG expert.
+2025-09-23 19:40:16,187 - src.config.configuration - INFO - Recursion limit set to: 30
+2025-09-23 19:40:16,188 - src.graph.nodes - INFO - Coordinator talking.
+2025-09-23 19:40:17,177 - httpx - INFO - HTTP Request: POST https://openrouter.ai/api/v1/chat/completions "HTTP/1.1 200 OK"
+2025-09-23 19:40:17,271 - src.graph.nodes - INFO - background investigation node is running.
+2025-09-23 19:40:18,258 - httpx - INFO - HTTP Request: POST https://openrouter.ai/api/v1/chat/completions "HTTP/1.1 200 OK"
+2025-09-23 19:40:18,282 - src.utils.translation - INFO - Translated text: '什么是selfRAG' -> 'What is selfRAG'
+2025-09-23 19:40:18,282 - src.graph.nodes - INFO - Translated query to English: What is selfRAG
+2025-09-23 19:40:18,293 - src.graph.nodes - INFO - Discovered LightRAG resources for background.
+2025-09-23 19:40:40,729 - src.rag.lightrag - INFO - LightRAG background parsed. entities: 15, relationships: 10, background_chars: 3239, background_approx_tokens: 1080
+2025-09-23 19:40:40,731 - src.graph.nodes - INFO - Planner generating full plan
+2025-09-23 19:40:41,945 - httpx - INFO - HTTP Request: POST https://openrouter.ai/api/v1/chat/completions "HTTP/1.1 200 OK"
+2025-09-23 19:40:45,777 - src.graph.nodes - INFO - Planner response: {
+    "locale": "zh-CN",
+    "has_enough_context": false,
+    "thought": "用户询问“什么是SelfRAG”。虽然背景调查提供了Self-RAG的初步定义、关键特性、优点和与标准RAG的区别，但仍缺乏足够详细和全面的信息来撰写一份详尽的报告。例如，关于其具体的技术实现细节、最新的研究进展、实际应用案例和更深入的性能评估数据等信息仍需补充。因此，需要进行进一步的信息收集。",
+    "title": "Self-RAG研究计划",
+    "steps": [
+        {
+            "need_search": true,
+            "title": "深入研究Self-RAG的核心技术与原理",
+            "description": "收集Self-RAG框架更详细的技术实现细节，包括但不限于：\n1. 反射令牌（reflection tokens）的具体生成、训练和应用机制。\n2. 自适应检索（adaptive retrieval）和生成过程中的决策逻辑。\n3. 解码和束搜索（beam search）算法如何结合反射令牌进行优化。\n4. 训练方法中涉及的数据集类型、模型架构和训练目标。\n5. 与其他RAG变体的详细技术对比（例如IterativeRAG, RAT, Dual-track RAG, QA-RAG等）。\n6. 详细阐述Self-RAG在提高事实准确性、可验证性和生成质量方面的具体技术原理和创新点。",
+            "step_type": "research"
+        },
+        {
+            "need_search": true,
+            "title": "Self-RAG的性能评估、应用案例与最新进展",
+            "description": "收集Self-RAG的性能评估数据、实际应用案例以及最新的研究进展：\n1. 详细收集Self-RAG在问答、长文本生成、推理等任务上的量化性能指标和对比数据（例如与ChatGPT、Llama2-chat等模型的对比）。\n2. 寻找Self-RAG在不同领域（如医疗、法律、教育、客服等）的实际应用案例和部署情况。\n3. 收集关于Self-RAG最新的研究论文、社区讨论、改进方案和未来发展方向。\n4. 探讨Self-RAG面临的挑战和潜在局限性。",
+            "step_type": "research"
+        },
+        {
+            "need_search": true,
+            "title": "Self-RAG的生态系统与相关工具/库",
+            "description": "收集关于Self-RAG生态系统的信息，包括：\n1. 是否存在开源的Self-RAG实现代码库、API或框架？如果有，收集其名称、功能特点和使用方式。\n2. 哪些研究机构或公司正在积极开发或应用Self-RAG？\n3. 社区对Self-RAG的接受度、关注点和讨论热度。\n4. 与Self-RAG相关的工具，如数据标注工具、评估工具等。",
+            "step_type": "research"
+        }
+    ]
+}
+2025-09-23 19:40:45,779 - src.graph.nodes - INFO - Research team is collaborating on tasks.
+2025-09-23 19:40:45,780 - src.graph.nodes - INFO - Researcher node is researching.
+2025-09-23 19:40:45,781 - src.tools.search - INFO - Tavily search configuration loaded: include_domains=[], exclude_domains=[]
+2025-09-23 19:40:45,781 - src.graph.nodes - INFO - Researcher tools: [LoggedPreprocessedTavilySearch(name='web_search', include_raw_content=True, include_images=True, api_wrapper=EnhancedTavilySearchAPIWrapper(tavily_api_key=SecretStr('**********'), api_base_url=None), include_image_descriptions=True), StructuredTool(name='crawl_tool', description='Use this to crawl a url and get a readable content in markdown format.', args_schema=<class 'langchain_core.utils.pydantic.crawl_tool'>, func=<function crawl_tool at 0x72511c463a60>)]
+Context7 Documentation MCP Server running on stdio
+2025-09-23 19:40:47,363 - src.graph.nodes - INFO - Executing step: 深入研究Self-RAG的核心技术与原理, agent: researcher
+2025-09-23 19:40:47,363 - src.graph.nodes - INFO - Recursion limit set to: 30
+2025-09-23 19:40:47,363 - src.graph.nodes - INFO - Agent input: {'messages': [HumanMessage(content='# Research Topic\n\nSelf-RAG研究计划\n\n# Current Step\n\n## Title\n\n深入研究Self-RAG的核心技术与原理\n\n## Description\n\n收集Self-RAG框架更详细的技术实现细节，包括但不限于：\n1. 反射令牌（reflection tokens）的具体生成、训练和应用机制。\n2. 自适应检索（adaptive retrieval）和生成过程中的决策逻辑。\n3. 解码和束搜索（beam search）算法如何结合反射令牌进行优化。\n4. 训练方法中涉及的数据集类型、模型架构和训练目标。\n5. 与其他RAG变体的详细技术对比（例如IterativeRAG, RAT, Dual-track RAG, QA-RAG等）。\n6. 详细阐述Self-RAG在提高事实准确性、可验证性和生成质量方面的具体技术原理和创新点。\n\n## Locale\n\nzh-CN', additional_kwargs={}, response_metadata={}), HumanMessage(content='IMPORTANT: DO NOT include inline citations in the text. Instead, track all sources and include a References section at the end using link reference format. Include an empty line between each citation for better readability. Use this format for each reference:\n- [Source Title](URL)\n\n- [Another Source](URL)', additional_kwargs={}, response_metadata={}, name='system')]}
+2025-09-23 19:40:48,646 - httpx - INFO - HTTP Request: POST https://openrouter.ai/api/v1/chat/completions "HTTP/1.1 200 OK"
+2025-09-23 19:41:06,101 - src.graph.nodes - INFO - Step '深入研究Self-RAG的核心技术与原理' execution completed by researcher
+2025-09-23 19:41:06,102 - src.graph.nodes - INFO - Research team is collaborating on tasks.

@@ -1,0 +1,72 @@
+2025-09-25 14:04:51,640 - src.prompt_enhancer.graph.enhancer_node - INFO - Enhancing user prompt...
+2025-09-25 14:05:01,049 - httpx - INFO - HTTP Request: POST https://openrouter.ai/api/v1/chat/completions "HTTP/1.1 200 OK"
+2025-09-25 14:05:01,733 - src.prompt_enhancer.graph.enhancer_node - INFO - Prompt enhancement completed successfully
+2025-09-25 14:05:01,733 - src.server.app - INFO - Enhanced query (English): Provide a concise yet comprehensive explanation of GraphRAG technology. Your explanation should clearly define what GraphRAG is, how it functions by integrating knowledge graphs with Retrieval Augmented Generation (RAG) principles, and what key advantages it offers over traditional RAG or standalone knowledge graph approaches. Furthermore, describe typical use cases or scenarios where GraphRAG is particularly beneficial. Aim for a clear, structured explanation suitable for a technically-inclined but not necessarily expert audience.
+2025-09-25 14:05:01,734 - src.config.configuration - INFO - Recursion limit set to: 30
+2025-09-25 14:05:01,735 - src.graph.nodes - INFO - Coordinator talking.
+2025-09-25 14:05:03,225 - httpx - INFO - HTTP Request: POST https://openrouter.ai/api/v1/chat/completions "HTTP/1.1 200 OK"
+2025-09-25 14:05:03,238 - src.graph.nodes - INFO - background investigation node is running.
+2025-09-25 14:05:03,239 - src.graph.nodes - WARNING - LightRAG background failed, fallback to web search: Failed to connect to LightRAG service: HTTPConnectionPool(host='localhost', port=9621): Max retries exceeded with url: /api/v1/retrieve (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x7bbd7e153080>: Failed to establish a new connection: [Errno 111] Connection refused'))
+2025-09-25 14:05:06,443 - src.graph.nodes - INFO - Planner generating full plan
+2025-09-25 14:05:07,831 - httpx - INFO - HTTP Request: POST https://openrouter.ai/api/v1/chat/completions "HTTP/1.1 200 OK"
+2025-09-25 14:05:11,971 - src.graph.nodes - INFO - Planner response: {
+    "locale": "en-US",
+    "has_enough_context": false,
+    "thought": "The user is asking 'What is GraphRAG technology?'. While the provided `background investigation results` offer a good foundational understanding of GraphRAG, including its definition, how it differs from baseline RAG, its components (knowledge graphs, community hierarchy, summaries), and its benefits and applications, it lacks specific technical details about its implementation, detailed architectural components, comprehensive use cases beyond healthcare, and benchmarks compared to other advanced RAG techniques. To provide a truly comprehensive answer, more in-depth information about GraphRAG's architecture, specific implementation steps, various applications, and comparative performance data is needed.",
+    "title": "Comprehensive Research on GraphRAG Technology",
+    "steps": [
+        {
+            "need_search": true,
+            "title": "Deep Dive into GraphRAG Architecture and Technical Implementation",
+            "description": "Gather detailed technical specifications of GraphRAG's architecture, including its core components, how knowledge graphs are constructed (e.g., entity extraction, relationship identification), the process of building community hierarchies, generating summaries, and the mechanisms by which these structures augment LLM prompts. Investigate specific algorithms or methodologies used in each stage of the GraphRAG process. Look for information on data modeling for knowledge graphs in GraphRAG and how semantic search is integrated. Include any available open-source implementations or frameworks and their technical details, such as the GraphRAG library on GitHub mentioned in the background information.",
+            "step_type": "research"
+        },
+        {
+            "need_search": true,
+            "title": "Expanded Use Cases, Applications, and Industry Adoption of GraphRAG",
+            "description": "Collect a wide range of use cases and applications of GraphRAG technology across various industries beyond the healthcare example. Identify companies or organizations that are actively using or developing GraphRAG solutions, detailing how they are leveraging the technology and the problems it solves. Look for specific examples, case studies, and testimonials that illustrate the benefits and impact of GraphRAG in different domains. Investigate its potential in areas like legal research, financial analysis, scientific discovery (e.g., 'Microsoft Discovery' mentioned in the background), and cybersecurity.",
+            "step_type": "research"
+        },
+        {
+            "need_search": true,
+            "title": "Comparative Analysis and Performance Benchmarks of GraphRAG",
+            "description": "Research comparative analyses between GraphRAG and other advanced RAG techniques, not just baseline RAG. Identify studies or reports that benchmark GraphRAG's performance in terms of accuracy, relevance, reasoning capabilities, and efficiency against other sophisticated information retrieval and generation methods. Collect data on its strengths and limitations when compared to alternative approaches. Look for any metrics (e.g., F1 score, precision, recall) and evaluation methodologies (e.g., 'BenchmarkQED') used to assess GraphRAG's effectiveness, particularly in scenarios involving complex information and reasoning tasks.",
+            "step_type": "research"
+        }
+    ]
+}
+2025-09-25 14:05:11,974 - src.graph.nodes - INFO - Research team is collaborating on tasks.
+2025-09-25 14:05:11,975 - src.deep_research.wrapper - INFO - 使用深度调研流程
+2025-09-25 14:05:11,975 - src.deep_research.wrapper - ERROR - 深度调研执行失败: ResearchState.__init__() missing 3 required positional arguments: 'current_task_index', 'executor_ready', and 'active_task_index'
+Traceback (most recent call last):
+  File "/home/chencheng/py/src/deer-flow/src/deep_research/wrapper.py", line 50, in ainvoke
+    deep_output = await self.deep_research_node.ainvoke(
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/chencheng/py/src/deer-flow/src/deep_research/node.py", line 72, in ainvoke
+    result = await self._graph.ainvoke(state, config=config)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/chencheng/py/src/deer-flow/.venv/lib/python3.12/site-packages/langgraph/pregel/__init__.py", line 2892, in ainvoke
+    async for chunk in self.astream(
+  File "/home/chencheng/py/src/deer-flow/.venv/lib/python3.12/site-packages/langgraph/pregel/__init__.py", line 2758, in astream
+    while loop.tick(input_keys=self.input_channels):
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/chencheng/py/src/deer-flow/.venv/lib/python3.12/site-packages/langgraph/pregel/loop.py", line 535, in tick
+    self.tasks = prepare_next_tasks(
+                 ^^^^^^^^^^^^^^^^^^^
+  File "/home/chencheng/py/src/deer-flow/.venv/lib/python3.12/site-packages/langgraph/pregel/algo.py", line 475, in prepare_next_tasks
+    if task := prepare_single_task(
+               ^^^^^^^^^^^^^^^^^^^^
+  File "/home/chencheng/py/src/deer-flow/.venv/lib/python3.12/site-packages/langgraph/pregel/algo.py", line 746, in prepare_single_task
+    val = _proc_input(
+          ^^^^^^^^^^^^
+  File "/home/chencheng/py/src/deer-flow/.venv/lib/python3.12/site-packages/langgraph/pregel/algo.py", line 990, in _proc_input
+    val = proc.mapper(val)
+          ^^^^^^^^^^^^^^^^
+  File "/home/chencheng/py/src/deer-flow/.venv/lib/python3.12/site-packages/langgraph/graph/state.py", line 1019, in _coerce_state
+    return schema(**input)
+           ^^^^^^^^^^^^^^^
+TypeError: ResearchState.__init__() missing 3 required positional arguments: 'current_task_index', 'executor_ready', and 'active_task_index'
+Before task with name 'planner' and path '('__pregel_pull', 'planner')'
+2025-09-25 14:05:11,980 - src.deep_research.wrapper - INFO - 回退到标准研究流程
+2025-09-25 14:05:11,980 - src.graph.nodes - INFO - Researcher node is researching.
+2025-09-25 14:05:11,981 - src.tools.search - INFO - Tavily search configuration loaded: include_domains=[], exclude_domains=[]

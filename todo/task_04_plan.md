@@ -1,0 +1,7 @@
+- [ ] 梳理 `tongyi-ds` 目录，确认需要复用的节点、工具及依赖，记录对 `qwen_agent` 的调用方式并核实与现有搜索工具无冲突。
+- [ ] 在 `src/` 下新增深度调研模块：迁移/改写 `DeepResearchNode` 与 `DeepResearchAdapter`，将工具调用替换为现有的 `get_web_search_tool`、`crawl_tool`、`python_repl_tool` 等实现，仅保留必要的 Tongyi 调用逻辑。
+- [ ] 新增 `deep_researcher_enable` 配置（环境变量+API 请求可选项），复用当前 OpenRouter 配置接入 Tongyi DeepResearch 模型，无需修改 `.env.example`，确保默认关闭、显式开启后启用新节点。
+- [ ] 在 `graph/builder.py` 及相关节点中加入可插拔逻辑：当开关启用时使用 Tongyi 深度调研节点替换现有 `researcher`，保持 `State`、`Command` 输出结构一致，并处理 plan/task_results 的透传。
+- [ ] 串联 API 输出：适配 `/api/chat/stream` 等接口以消费 DeepResearchNode 返回的 answer/plan/task_results/messages，确保 reporter/citation 流程正常。
+- [ ] 为新路径补充测试（覆盖节点切换与 DeepResearchNode 输出适配），使用 `uv run pytest`/`uv run ruff format`/`uv run make lint` 等命令完成验证。
+- [ ] 更新相关文档与样例（如 README、conf.yaml.example、docs/）说明开关及运行方式，强调复用 OpenRouter 配置与 `uv run` 测试要求。

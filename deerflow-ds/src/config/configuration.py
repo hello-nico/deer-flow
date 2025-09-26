@@ -51,9 +51,6 @@ class Configuration:
     mcp_settings: dict = None  # MCP settings, including dynamic loaded tools
     report_style: str = ReportStyle.ACADEMIC.value  # Report style
     enable_deep_thinking: bool = False  # Whether to enable deep thinking
-    deep_research_enabled: bool = field(
-        default_factory=lambda: get_bool_env("DEEP_RESEARCHER_ENABLE", False)
-    )  # Whether to enable deep research
 
     @classmethod
     def from_runnable_config(

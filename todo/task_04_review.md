@@ -1,0 +1,4 @@
+- [ ] 修复 `DeepResearchNodeWrapper` 与 `DeepResearchNode` 输出类型不一致：`node.invoke/ainvoke` 返回 `dict`，包装器 `_convert_to_researcher_format` 按 `DeepResearchNodeOutputs` 访问属性，运行时会触发 `AttributeError`。建议统一输出结构（改为数据类或包装器统一按字典键读取）。
+- [ ] 调整 `DeepResearchNodeWrapper` 的返回值为 `Command`：当前直接返回数据字典，未提供 `goto="research_team"`，会中断 LangGraph 流程；应参照 `researcher_node` 返回 `Command(update=..., goto="research_team")`。
+- [ ] 校正 `.env.example` 中的环境变量名：示例使用了 `DEEP_RESEARCH_MODEL`，但代码读取 `DEEPRESEARCH_MODEL`，需保持一致防止配置失效。
+- [ ] 评估 `DeepResearchNodeWrapper.invoke` 的同步调用路径：该函数直接返回异步协程（调用 `researcher_node`），需要改为走异步接口或阻塞等待，以免调用方拿到协程对象。

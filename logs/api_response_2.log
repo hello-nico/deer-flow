@@ -1,0 +1,140 @@
+2025-09-19 11:04:14,610 - src.config.configuration - INFO - Recursion limit set to: 30
+2025-09-19 11:04:14,699 - src.graph.nodes - INFO - Coordinator talking.
+2025-09-19 11:04:16,408 - httpx - INFO - HTTP Request: POST https://openrouter.ai/api/v1/chat/completions "HTTP/1.1 200 OK"
+2025-09-19 11:04:50,631 - src.graph.nodes - INFO - background investigation node is running.
+2025-09-19 11:04:53,370 - src.graph.nodes - INFO - Planner generating full plan
+2025-09-19 11:04:54,354 - httpx - INFO - HTTP Request: POST https://openrouter.ai/api/v1/chat/completions "HTTP/1.1 200 OK"
+2025-09-19 11:07:22,716 - src.graph.nodes - INFO - Planner response: {
+    "locale": "en-US",
+    "has_enough_context": false,
+    "thought": "The user asks for a clear explanation of GraphRAG technology. To produce a thorough report, we need authoritative definitions, origins, technical architecture, benchmarks, tools, real-world examples, limitations, alternatives, and best practices beyond the brief background snippets provided.",
+    "title": "Comprehensive information-gathering plan: GraphRAG technology (definition, architecture, benchmarks, tools, use cases, and limitations)",
+    "steps": [
+        {
+            "need_search": true,
+            "title": "Foundations, origins, and technical architecture of GraphRAG",
+            "description": "Collect authoritative sources that define GraphRAG and document its origin and core mechanisms. Specifically gather: (1) Canonical definitions and scope from primary sources such as Microsoft Research announcements/papers and the official GitHub repo (e.g., microsoft/graphrag), plus well-regarded secondary sources (Lettria: “What is GraphRAG? Definition, Approaches, and Examples”; FalkorDB: “What is GraphRAG? Types, Limitations & When to Use”; Neo4j/LlamaIndex/LangChain docs). Capture publication dates, authors, venues, and URLs. (2) Historical timeline of GraphRAG’s emergence: initial release date(s), key papers/blog posts, notable updates through 2025. (3) Detailed technical architecture: the end-to-end pipeline to build and use GraphRAG, including a) knowledge graph construction from unstructured text (entity/relation extraction approaches, LLM vs. rule-based/OpenIE, schema/ontology design, deduplication, entity resolution), b) community detection and hierarchy building (e.g., Louvain/Leiden or alternatives) and how summaries are generated, c) retrieval strategies (local vs. global retrieval; graph neighborhood expansion; hybrid graph+vector retrieval; re-ranking), d) prompt augmentation methods (what context is inserted and how), e) query planning strategies for multi-hop/complex questions, f) storage/indexing choices (RDF vs. LPG; SPARQL, Cypher, Gremlin; interplay with vector stores), g) extensibility with GNNs/graph ML for retrieval and ranking. (4) Taxonomy and terminology: how GraphRAG differs from baseline vector RAG, KG-QA systems, and hybrid text-graph methods; clarify synonyms/related terms (Graph QA, KG-augmented RAG, hierarchical RAG). (5) Implementation details: supported tools and frameworks (Microsoft GraphRAG toolkit, LlamaIndex GraphRAG, LangChain graph modules, Neo4j, AWS Neptune, TigerGraph, FalkorDB, NebulaGraph, ArangoDB, Memgraph), typical data ingestion connectors, and deployment patterns. Preserve exact citations and links for every claim gathered.",
+            "step_type": "research"
+        },
+        {
+            "need_search": true,
+            "title": "Quantitative benchmarks, real-world use cases, and tooling landscape",
+            "description": "Collect comprehensive quantitative and practical evidence of GraphRAG’s effectiveness and usage. Specifically gather: (1) Benchmark studies comparing GraphRAG vs. baseline vector RAG (and other variants) on multi-hop QA, long-context QA, knowledge-intensive QA; include datasets, metrics (Exact Match, F1, faithfulness/groundedness, answer relevancy), and reported numbers; extract ablation studies (e.g., impact of community summaries, graph depth, re-ranking) from Microsoft Research materials, independent evaluations, and reputable blogs or papers (2024–2025). (2) Performance and cost data: latency, throughput, context token counts, prompt sizes, hardware setup, index build times/costs, graph size (#entities/edges), and any TCO insights; note methodology and environment for each data point. (3) Real-world case studies and industry applications: sectors (e.g., finance, healthcare, legal, support, R&D), problem types, observed benefits, concrete ROI or quality improvements, and deployment architectures; include case studies from vendors (Neo4j, AWS Neptune, TigerGraph), toolkit maintainers (Microsoft GraphRAG, LlamaIndex, LangChain), and independent user stories. (4) Tooling comparison: capabilities and limitations of major frameworks (setup steps, ingestion/ETL, schema management, community detection options, summarization pipelines, retrieval APIs, evaluation tools), license terms, ecosystem maturity, and integration with monitoring/evaluation frameworks (RAGAS, TruLens, ARES, etc.). Include links, dates, and exact figures wherever available.",
+            "step_type": "research"
+        },
+        {
+            "need_search": true,
+            "title": "Limitations, risks, alternatives, best practices, and future outlook",
+            "description": "Collect critical perspectives and guidance to inform when and how to use GraphRAG. Specifically gather: (1) Known limitations and risks: graph construction quality and error propagation, entity resolution challenges, schema drift/maintenance, data freshness/update strategies, privacy/PII handling, hallucinations and mitigation, explainability strengths/limits, scalability bottlenecks, and operational complexity; include concrete incidents or documented pitfalls. (2) Alternatives and comparators: baseline vector RAG (BM25+vector hybrid), dense retrieval with re-ranking (e.g., ColBERT), agentic retrieval/planning, Graph-of-Thoughts, traditional KG-QA (e.g., Text-to-SPARQL/Cypher, GraftNet), document-level hierarchical RAG without graphs; enumerate trade-offs, when to choose each, and any head-to-head results. (3) Best practices and implementation guidance: schema/ontology design tips, high-precision extraction prompts/patterns, evaluation and monitoring workflows, security/governance patterns, incremental/streaming updates, human-in-the-loop curation, and measured thresholds for adopting GraphRAG (e.g., corpus characteristics, query complexity). (4) Standards and future directions: RDF/OWL vs. LPG ecosystem trends, SPARQL/Cypher/Gremlin support in LLM tooling, integration of GNNs, dynamic/real-time KGs, multi-modal GraphRAG, and forecasted research directions from 2024–2025. Source from research papers, vendor docs, conference talks, engineering blogs, and community discussions (e.g., HN/Reddit) to capture both mainstream and alternative viewpoints; include links, dates, and direct citations.",
+            "step_type": "research"
+        }
+    ]
+}
+2025-09-19 11:07:22,719 - src.graph.nodes - INFO - Research team is collaborating on tasks.
+2025-09-19 11:07:22,720 - src.graph.nodes - INFO - Researcher node is researching.
+2025-09-19 11:07:22,721 - src.tools.search - INFO - Tavily search configuration loaded: include_domains=[], exclude_domains=[]
+2025-09-19 11:07:22,721 - src.tools.retriever - INFO - create retriever tool: lightrag
+2025-09-19 11:07:22,721 - src.graph.nodes - INFO - Researcher tools: [RetrieverTool(retriever=<src.rag.lightrag.LightRAGProvider object at 0x79f80d7a1580>, resources=[Resource(uri='rag://space1', title='Space 1', description='')]), LoggedTavilySearchWithImages(name='web_search', max_results=3, include_raw_content=True, include_images=True, api_wrapper=EnhancedTavilySearchAPIWrapper(tavily_api_key=SecretStr('**********'), api_base_url=None), include_image_descriptions=True), StructuredTool(name='crawl_tool', description='Use this to crawl a url and get a readable content in markdown format.', args_schema=<class 'langchain_core.utils.pydantic.crawl_tool'>, func=<function crawl_tool at 0x79f80edfeac0>)]
+2025-09-19 11:07:22,727 - src.graph.nodes - INFO - Executing step: Foundations, origins, and technical architecture of GraphRAG, agent: researcher
+2025-09-19 11:07:22,728 - src.graph.nodes - INFO - Recursion limit set to: 30
+2025-09-19 11:07:22,728 - src.graph.nodes - INFO - Agent input: {'messages': [HumanMessage(content='# Research Topic\n\nComprehensive information-gathering plan: GraphRAG technology (definition, architecture, benchmarks, tools, use cases, and limitations)\n\n# Current Step\n\n## Title\n\nFoundations, origins, and technical architecture of GraphRAG\n\n## Description\n\nCollect authoritative sources that define GraphRAG and document its origin and core mechanisms. Specifically gather: (1) Canonical definitions and scope from primary sources such as Microsoft Research announcements/papers and the official GitHub repo (e.g., microsoft/graphrag), plus well-regarded secondary sources (Lettria: “What is GraphRAG? Definition, Approaches, and Examples”; FalkorDB: “What is GraphRAG? Types, Limitations & When to Use”; Neo4j/LlamaIndex/LangChain docs). Capture publication dates, authors, venues, and URLs. (2) Historical timeline of GraphRAG’s emergence: initial release date(s), key papers/blog posts, notable updates through 2025. (3) Detailed technical architecture: the end-to-end pipeline to build and use GraphRAG, including a) knowledge graph construction from unstructured text (entity/relation extraction approaches, LLM vs. rule-based/OpenIE, schema/ontology design, deduplication, entity resolution), b) community detection and hierarchy building (e.g., Louvain/Leiden or alternatives) and how summaries are generated, c) retrieval strategies (local vs. global retrieval; graph neighborhood expansion; hybrid graph+vector retrieval; re-ranking), d) prompt augmentation methods (what context is inserted and how), e) query planning strategies for multi-hop/complex questions, f) storage/indexing choices (RDF vs. LPG; SPARQL, Cypher, Gremlin; interplay with vector stores), g) extensibility with GNNs/graph ML for retrieval and ranking. (4) Taxonomy and terminology: how GraphRAG differs from baseline vector RAG, KG-QA systems, and hybrid text-graph methods; clarify synonyms/related terms (Graph QA, KG-augmented RAG, hierarchical RAG). (5) Implementation details: supported tools and frameworks (Microsoft GraphRAG toolkit, LlamaIndex GraphRAG, LangChain graph modules, Neo4j, AWS Neptune, TigerGraph, FalkorDB, NebulaGraph, ArangoDB, Memgraph), typical data ingestion connectors, and deployment patterns. Preserve exact citations and links for every claim gathered.\n\n## Locale\n\nen-US', additional_kwargs={}, response_metadata={}), HumanMessage(content='**The user mentioned the following resource files:**\n\n- Space 1 ()\n\n\nYou MUST use the **local_search_tool** to retrieve the information from the resource files.', additional_kwargs={}, response_metadata={}), HumanMessage(content='IMPORTANT: DO NOT include inline citations in the text. Instead, track all sources and include a References section at the end using link reference format. Include an empty line between each citation for better readability. Use this format for each reference:\n- [Source Title](URL)\n\n- [Another Source](URL)', additional_kwargs={}, response_metadata={}, name='system')]}
+2025-09-19 11:07:24,387 - httpx - INFO - HTTP Request: POST https://openrouter.ai/api/v1/chat/completions "HTTP/1.1 200 OK"
+2025-09-19 11:07:31,513 - src.tools.retriever - INFO - Retriever tool query: GraphRAG Microsoft Research announcement paper GitHub microsoft/graphrag
+开始调用到LightRAG服务
+2025-09-19 11:07:35,644 - src.rag.lightrag - INFO - LightRAG response received.
+2025-09-19 11:07:35,644 - src.rag.lightrag - INFO - LightRAG chunks parsed.
+2025-09-19 11:07:35,644 - src.tools.retriever - INFO - Retriever output trimmed.
+2025-09-19 11:07:35,644 - src.tools.retriever - INFO - Retriever tool query: Lettria "What is GraphRAG?" Definition Approaches Examples
+开始调用到LightRAG服务
+2025-09-19 11:07:43,326 - src.rag.lightrag - INFO - LightRAG response received.
+2025-09-19 11:07:43,326 - src.rag.lightrag - INFO - LightRAG chunks parsed.
+2025-09-19 11:07:43,326 - src.tools.retriever - INFO - Retriever output trimmed.
+2025-09-19 11:07:43,326 - src.tools.retriever - INFO - Retriever tool query: FalkorDB "What is GraphRAG?" Types Limitations When to Use
+开始调用到LightRAG服务
+2025-09-19 11:07:52,435 - src.rag.lightrag - INFO - LightRAG response received.
+2025-09-19 11:07:52,435 - src.rag.lightrag - INFO - LightRAG chunks parsed.
+2025-09-19 11:07:52,436 - src.tools.retriever - INFO - Retriever output trimmed.
+2025-09-19 11:07:52,436 - src.tools.retriever - INFO - Retriever tool query: Neo4j GraphRAG docs LlamaIndex Graph RAG LangChain graph modules
+开始调用到LightRAG服务
+2025-09-19 11:08:07,828 - src.rag.lightrag - INFO - LightRAG response received.
+2025-09-19 11:08:07,828 - src.rag.lightrag - INFO - LightRAG chunks parsed.
+2025-09-19 11:08:07,828 - src.tools.retriever - INFO - Retriever output trimmed.
+2025-09-19 11:08:07,828 - src.tools.retriever - INFO - Retriever tool query: GraphRAG community detection Louvain Leiden global retrieval local retrieval Microsoft community report summaries
+开始调用到LightRAG服务
+2025-09-19 11:08:13,901 - src.rag.lightrag - INFO - LightRAG response received.
+2025-09-19 11:08:13,901 - src.rag.lightrag - INFO - LightRAG chunks parsed.
+2025-09-19 11:08:13,901 - src.tools.retriever - INFO - Retriever output trimmed.
+2025-09-19 11:08:13,901 - src.tools.retriever - INFO - Retriever tool query: GraphRAG timeline initial release date updates 2023 2024 2025 blog post paper
+开始调用到LightRAG服务
+2025-09-19 11:08:21,568 - src.rag.lightrag - INFO - LightRAG response received.
+2025-09-19 11:08:21,569 - src.rag.lightrag - INFO - LightRAG chunks parsed.
+2025-09-19 11:08:21,569 - src.tools.retriever - INFO - Retriever output trimmed.
+2025-09-19 11:08:21,569 - src.tools.retriever - INFO - Retriever tool query: GraphRAG architecture pipeline knowledge graph construction entity extraction relation extraction schema ontology deduplication entity resolution prompt augmentation query planning storage indexing RDF LPG SPARQL Cypher Gremlin vector store
+开始调用到LightRAG服务
+2025-09-19 11:08:27,658 - src.rag.lightrag - INFO - LightRAG response received.
+2025-09-19 11:08:27,658 - src.rag.lightrag - INFO - LightRAG chunks parsed.
+2025-09-19 11:08:27,658 - src.tools.retriever - INFO - Retriever output trimmed.
+2025-09-19 11:08:29,348 - httpx - INFO - HTTP Request: POST https://openrouter.ai/api/v1/chat/completions "HTTP/1.1 200 OK"
+2025-09-19 11:08:43,125 - src.tools.retriever - INFO - Retriever tool query: microsoft/graphrag GitHub
+开始调用到LightRAG服务
+2025-09-19 11:08:51,276 - src.rag.lightrag - INFO - LightRAG response received.
+2025-09-19 11:08:51,276 - src.rag.lightrag - INFO - LightRAG chunks parsed.
+2025-09-19 11:08:51,276 - src.tools.retriever - INFO - Retriever output trimmed.
+2025-09-19 11:08:53,277 - httpx - INFO - HTTP Request: POST https://openrouter.ai/api/v1/chat/completions "HTTP/1.1 200 OK"
+2025-09-19 11:08:56,360 - src.tools.retriever - INFO - Retriever tool query: GraphRAG definition Microsoft Research Graph RAG microsoft/graphrag GitHub README
+开始调用到LightRAG服务
+2025-09-19 11:09:04,106 - src.rag.lightrag - INFO - LightRAG response received.
+2025-09-19 11:09:04,107 - src.rag.lightrag - INFO - LightRAG chunks parsed.
+2025-09-19 11:09:04,107 - src.tools.retriever - INFO - Retriever output trimmed.
+2025-09-19 11:09:07,024 - httpx - INFO - HTTP Request: POST https://openrouter.ai/api/v1/chat/completions "HTTP/1.1 200 OK"
+2025-09-19 11:09:26,187 - httpx - INFO - HTTP Request: POST https://openrouter.ai/api/v1/chat/completions "HTTP/1.1 200 OK"
+2025-09-19 11:10:33,709 - httpx - INFO - HTTP Request: POST https://openrouter.ai/api/v1/chat/completions "HTTP/1.1 200 OK"
+2025-09-19 11:10:39,683 - src.server.app - ERROR - Error during graph execution
+Traceback (most recent call last):
+  File "/home/chencheng/py/src/deer-flow/src/server/app.py", line 247, in _stream_graph_events
+    async for agent, _, event_data in graph_instance.astream(
+  File "/home/chencheng/py/src/deer-flow/.venv/lib/python3.12/site-packages/langgraph/pregel/__init__.py", line 2759, in astream
+    async for _ in runner.atick(
+  File "/home/chencheng/py/src/deer-flow/src/graph/nodes.py", line 491, in researcher_node
+    return await _setup_and_execute_agent_step(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/chencheng/py/src/deer-flow/src/graph/nodes.py", line 477, in _setup_and_execute_agent_step
+    return await _execute_agent_step(state, agent, agent_type)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/chencheng/py/src/deer-flow/src/graph/nodes.py", line 394, in _execute_agent_step
+    result = await agent.ainvoke(
+             ^^^^^^^^^^^^^^^^^^^^
+  File "/home/chencheng/py/src/deer-flow/.venv/lib/python3.12/site-packages/langgraph/pregel/__init__.py", line 2892, in ainvoke
+    async for chunk in self.astream(
+  File "/home/chencheng/py/src/deer-flow/.venv/lib/python3.12/site-packages/langgraph/pregel/__init__.py", line 2759, in astream
+    async for _ in runner.atick(
+  File "/home/chencheng/py/src/deer-flow/.venv/lib/python3.12/site-packages/langgraph/prebuilt/chat_agent_executor.py", line 763, in acall_model
+    response = cast(AIMessage, await model_runnable.ainvoke(state, config))
+                               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/chencheng/py/src/deer-flow/.venv/lib/python3.12/site-packages/langchain_core/runnables/base.py", line 3088, in ainvoke
+    input_ = await coro_with_context(part(), context, create_task=True)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/chencheng/py/src/deer-flow/.venv/lib/python3.12/site-packages/langchain_core/runnables/base.py", line 5447, in ainvoke
+    return await self.bound.ainvoke(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/chencheng/py/src/deer-flow/.venv/lib/python3.12/site-packages/langchain_core/language_models/chat_models.py", line 417, in ainvoke
+    llm_result = await self.agenerate_prompt(
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/chencheng/py/src/deer-flow/.venv/lib/python3.12/site-packages/langchain_core/language_models/chat_models.py", line 991, in agenerate_prompt
+    return await self.agenerate(
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "/home/chencheng/py/src/deer-flow/.venv/lib/python3.12/site-packages/langchain_core/language_models/chat_models.py", line 949, in agenerate
+    raise exceptions[0]
+  File "/home/chencheng/py/src/deer-flow/.venv/lib/python3.12/site-packages/langchain_core/language_models/chat_models.py", line 1106, in _agenerate_with_cache
+    async for chunk in self._astream(messages, stop=stop, **kwargs):
+  File "/home/chencheng/py/src/deer-flow/.venv/lib/python3.12/site-packages/langchain_openai/chat_models/base.py", line 2493, in _astream
+    async for chunk in super()._astream(*args, **kwargs):
+  File "/home/chencheng/py/src/deer-flow/.venv/lib/python3.12/site-packages/langchain_openai/chat_models/base.py", line 1116, in _astream
+    async for chunk in response:
+  File "/home/chencheng/py/src/deer-flow/.venv/lib/python3.12/site-packages/openai/_streaming.py", line 147, in __aiter__
+    async for item in self._iterator:
+  File "/home/chencheng/py/src/deer-flow/.venv/lib/python3.12/site-packages/openai/_streaming.py", line 174, in __stream__
+    raise APIError(
+openai.APIError: Your input exceeds the context window of this model. Please adjust your input and try again.
+During task with name 'agent' and id 'ff07c2ab-b0ae-38c7-98c4-850d1c6cc4b0'
+During task with name 'researcher' and id '8be3d853-02d5-3dc8-0eab-a0904768694d'
